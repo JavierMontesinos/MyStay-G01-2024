@@ -1,9 +1,6 @@
 package es.upm.dit.isst.mystayapi.model;
 
-import java.util.Objects;
-
 import jakarta.persistence.*;
-
 import java.sql.Time;
 
 @Entity
@@ -11,69 +8,137 @@ public class Servicio {
     @Id 
     @GeneratedValue( strategy=GenerationType.AUTO )
     private int ID;
-    @ManyToOne
-    @JoinColumn(name = "ClienteID")
-    private Client Client;
-    private String Tipo;
-    private String Descripcion;
-    private Time Fecha;
+    private String nombre;
+    private String descripcion;
+    private Time fecha;
+    private boolean esPremium;
+    private double precio;
+    @ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumns({
+		@JoinColumn(name="HotelID",referencedColumnName="ID")		
+	})
+	private Hotel hotel;
 
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumns({
+        @JoinColumn(name="EmpleadoID",referencedColumnName="ID")
+    })
+    private Empleado empleado;
 
+    @ManyToOne(fetch=FetchType.EAGER)
+    @JoinColumns({
+        @JoinColumn(name="ReservaID",referencedColumnName="ID")
+    })
+    private Reserva reserva;
 
+    //Getters, Setters, HashCode, Equals, ToString
+    // Getters
     public int getID() {
         return ID;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+
+    public Time getFecha() {
+        return fecha;
+    }
+
+    public boolean isEsPremium() {
+        return esPremium;
+    }
+
+    public double getPrecio() {
+        return precio;
+    }
+
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public Empleado getEmpleado() {
+        return empleado;
+    }
+
+    public Reserva getReserva() {
+        return reserva;
+    }
+
+    // Setters
     public void setID(int ID) {
         this.ID = ID;
     }
 
-    public Client getClient() {
-        return Client;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public void setClient(Client Client) {
-        this.Client = Client;
+    public void setDescripcion(String descripcion) {
+        this.descripcion = descripcion;
     }
 
-    public String getTipo() {
-        return Tipo;
+    public void setFecha(Time fecha) {
+        this.fecha = fecha;
     }
 
-    public void setTipo(String Tipo) {
-        this.Tipo = Tipo;
+    public void setEsPremium(boolean esPremium) {
+        this.esPremium = esPremium;
     }
 
-    public String getDescripcion() {
-        return Descripcion;
+    public void setPrecio(double precio) {
+        this.precio = precio;
     }
 
-    public void setDescripcion(String Descripcion) {
-        this.Descripcion = Descripcion;
+    public void setHotelID(Hotel hotel) {
+        this.hotel = hotel;
     }
 
-    public Time getFecha() {
-        return Fecha;
+    public void setEmpleadoID(Empleado empleado) {
+        this.empleado = empleado;
     }
 
-    public void setFecha(Time Fecha) {
-        this.Fecha = Fecha;
+    public void setReservaID(Reserva reserva) {
+        this.reserva = reserva;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Servicio servicio = (Servicio) o;
-        return ID == servicio.ID &&
-                Objects.equals(Client, servicio.Client) &&
-                Objects.equals(Tipo, servicio.Tipo) &&
-                Objects.equals(Descripcion, servicio.Descripcion) &&
-                Objects.equals(Fecha, servicio.Fecha);
-    }
-
+    // HashCode and Equals
     @Override
     public int hashCode() {
-        return Objects.hash(ID, Client, Tipo, Descripcion, Fecha);
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ID;
+        return result;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        Servicio other = (Servicio) obj;
+        if (ID != other.ID)
+            return false;
+        return true;
+    }
+
+    // ToString
+    @Override
+    public String toString() {
+        return "Servicio [ID=" + ID + ", nombre=" + nombre + ", descripcion=" + descripcion + ", fecha=" + fecha
+                + ", esPremium=" + esPremium + ", precio=" + precio + ", Hotel=" + hotel + ", EmpleadoID="
+                + empleado + ", Reserva=" + reserva + "]";
+    }
+
+
+
+
+   
 }
