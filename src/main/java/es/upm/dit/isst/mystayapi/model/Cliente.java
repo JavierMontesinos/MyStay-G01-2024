@@ -67,7 +67,7 @@ public class Cliente {
         this.telefono = telefono;
     }
 
-    public boolean isPremium() {
+    public boolean getPremium() {
         return Premium;
     }
 
@@ -83,7 +83,7 @@ public class Cliente {
         Gasto = gasto;
     }
 
-    public boolean isPagado() {
+    public boolean getPagado() {
         return Pagado;
     }
 
@@ -158,6 +158,8 @@ public class Cliente {
                 + telefono + ", Premium=" + Premium + ", Gasto=" + Gasto + ", Pagado=" + Pagado + ", Hotel=" + hotel
                 + ", Habitacion=" + habitacion + "]";
     }
+
+    
 
     
 }
