@@ -1,16 +1,18 @@
 package es.upm.dit.isst.mystayapi.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+
 import java.sql.Time;
 
 @Entity
 public class Servicio {
     @Id 
     @GeneratedValue( strategy=GenerationType.AUTO )
-    private int ID;
+    private Integer ID;
     private String nombre;
     private String descripcion;
-    private Time fecha;
+    @Future private Time fecha;
     private boolean esPremium;
     private double precio;
     @ManyToOne(fetch=FetchType.EAGER)
@@ -33,7 +35,7 @@ public class Servicio {
 
     //Getters, Setters, HashCode, Equals, ToString
     // Getters
-    public int getID() {
+    public Integer getID() {
         return ID;
     }
 
@@ -70,7 +72,7 @@ public class Servicio {
     }
 
     // Setters
-    public void setID(int ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 

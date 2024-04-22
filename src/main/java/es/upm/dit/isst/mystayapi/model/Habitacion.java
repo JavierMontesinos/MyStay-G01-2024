@@ -13,8 +13,8 @@ import jakarta.persistence.ManyToOne;
 public class Habitacion {
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
-    private int ID;
-    private int numero;
+    private Integer ID;
+    private Integer numero;
     private String tipo;
     private double precio;
     @ManyToOne(fetch=FetchType.EAGER)
@@ -25,11 +25,11 @@ public class Habitacion {
 
     //Getters, Setters, HashCode, Equals, ToString
     // Getters
-    public int getID() {
+    public Integer getID() {
         return ID;
     }
 
-    public int getNumero() {
+    public Integer getNumero() {
         return numero;
     }
 
@@ -46,11 +46,11 @@ public class Habitacion {
     }
 
     // Setters
-    public void setID(int ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 
-    public void setNumero(int numero) {
+    public void setNumero(Integer numero) {
         this.numero = numero;
     }
 

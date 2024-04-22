@@ -9,15 +9,15 @@ import jakarta.persistence.Id;
 public class Hotel {
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
-    private int ID;
+    private Integer ID;
     private String direccion;
 
     //Getters, Setters, HashCode, Equals, ToString
-    public int getID() {
+    public Integer getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 

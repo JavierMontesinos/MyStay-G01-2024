@@ -13,7 +13,7 @@ import jakarta.persistence.ManyToOne;
 public class Recurso {
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
-    private int ID;
+    private Integer ID;
     private String nombre;
     @ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumns({
@@ -22,11 +22,11 @@ public class Recurso {
 	private Hotel hotel;
 
     //Getters, Setters, HashCode, Equals, ToString
-    public int getID() {
+    public Integer getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 

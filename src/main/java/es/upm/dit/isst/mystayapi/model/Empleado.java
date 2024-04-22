@@ -13,7 +13,7 @@ import jakarta.persistence.ManyToOne;
 public class Empleado {
     @Id
     @GeneratedValue( strategy = GenerationType.AUTO)
-    private int ID;
+    private Integer ID;
     private String DNI;
     private String nombre;
     private String correo;
@@ -29,7 +29,7 @@ public class Empleado {
     //Getters, Setters, HashCode, Equals, ToString
 
     // Getters
-    public int getID() {
+    public Integer getID() {
         return ID;
     }
 
@@ -58,7 +58,7 @@ public class Empleado {
     }
 
     // Setters
-    public void setID(int ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 

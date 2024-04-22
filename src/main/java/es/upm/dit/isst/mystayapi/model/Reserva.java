@@ -2,6 +2,8 @@ package es.upm.dit.isst.mystayapi.model;
 
 import java.util.Objects;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Future;
+
 import java.sql.Time;
 
 
@@ -9,9 +11,9 @@ import java.sql.Time;
 public class Reserva {
     @Id 
     @GeneratedValue( strategy=GenerationType.AUTO )
-    private int ID;
-    private Time FechaInicio;
-    private Time FechaFinal;
+    private Integer ID;
+    @Future private Time FechaInicio;
+    @Future private Time FechaFinal;
     private String Llave;
     @ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumns({
@@ -34,7 +36,7 @@ public class Reserva {
     //Getters, Setters, HashCode, Equals, ToString
 
     // Getters
-    public int getID() {
+    public Integer getID() {
         return ID;
     }
 
@@ -63,7 +65,7 @@ public class Reserva {
     }
 
     // Setters
-    public void setID(int ID) {
+    public void setID(Integer ID) {
         this.ID = ID;
     }
 
