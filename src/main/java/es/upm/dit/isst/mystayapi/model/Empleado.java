@@ -18,7 +18,7 @@ public class Empleado {
     private String nombre;
     private String correo;
     private String telefono;
-    private boolean disponible;
+    private Boolean disponible;
     @ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumns({
 		@JoinColumn(name="HotelID",referencedColumnName="ID")		
@@ -53,7 +53,7 @@ public class Empleado {
         return hotel;
     }
 
-    public boolean isDisponible() {
+    public Boolean isDisponible() {
         return disponible;
     }
 
@@ -78,11 +78,11 @@ public class Empleado {
         this.telefono = telefono;
     }
 
-    public void setHotelID(Hotel hotel) {
+    public void setHotel(Hotel hotel) {
         this.hotel = hotel;
     }
 
-    public void setDisponible(boolean disponible) {
+    public void setDisponible(Boolean disponible) {
         this.disponible = disponible;
     }
 

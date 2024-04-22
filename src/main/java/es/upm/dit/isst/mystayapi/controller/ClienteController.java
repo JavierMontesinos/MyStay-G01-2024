@@ -15,13 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.upm.dit.isst.mystayapi.model.Cliente;
 import es.upm.dit.isst.mystayapi.model.Habitacion;
 import es.upm.dit.isst.mystayapi.repository.ClienteRepository;
-import jakarta.transaction.Transactional;
 
 @RestController
 @RequestMapping
@@ -107,7 +105,6 @@ public class ClienteController {
     }
 
     @PutMapping("/clientes/{id}/habitacion/{habitacion}")
-    @Transactional
     public ResponseEntity<?> actualizaHabitacion(@PathVariable Integer id, @PathVariable Habitacion habitacion){
         return clienteRepository.findById(id).map(cliente -> {
             cliente.setHabitacion(habitacion);

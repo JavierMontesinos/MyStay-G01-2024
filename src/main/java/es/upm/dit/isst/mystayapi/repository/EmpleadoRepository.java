@@ -6,5 +6,5 @@ import es.upm.dit.isst.mystayapi.model.Empleado;
 import es.upm.dit.isst.mystayapi.model.Hotel;
 
 public interface EmpleadoRepository extends CrudRepository<Empleado, Integer>{
-    List<Empleado>findbyHotel(Hotel hotel);
+    //List<Empleado> findbyHotel(Hotel hotel);
 }

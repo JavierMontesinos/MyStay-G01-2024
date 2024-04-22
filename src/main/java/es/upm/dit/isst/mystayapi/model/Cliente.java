@@ -12,9 +12,9 @@ public class Cliente {
     private String nombre;
     private String correo;
     private String telefono;
-    private boolean Premium;
-    private double Gasto;
-    private boolean Pagado;
+    private Boolean premium;
+    private Double gasto;
+    private Boolean pagado;
     @ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumns({
 		@JoinColumn(name="HotelID",referencedColumnName="ID")		
@@ -67,28 +67,28 @@ public class Cliente {
         this.telefono = telefono;
     }
 
-    public boolean getPremium() {
-        return Premium;
+    public Boolean getPremium() {
+        return premium;
     }
 
-    public void setPremium(boolean premium) {
-        Premium = premium;
+    public void setPremium(Boolean premium) {
+        this.premium = premium;
     }
 
     public double getGasto() {
-        return Gasto;
+        return gasto;
     }
 
     public void setGasto(double gasto) {
-        Gasto = gasto;
+        this.gasto = gasto;
     }
 
-    public boolean getPagado() {
-        return Pagado;
+    public Boolean getPagado() {
+        return pagado;
     }
 
-    public void setPagado(boolean pagado) {
-        Pagado = pagado;
+    public void setPagado(Boolean pagado) {
+        this.pagado = pagado;
     }
 
     public Hotel getHotel() {
@@ -150,13 +150,6 @@ public class Cliente {
         } else if (!telefono.equals(other.telefono))
             return false;
         return true;
-    }
-
-    @Override
-    public String toString() {
-        return "Client [ID=" + ID + ", DNI=" + DNI + ", nombre=" + nombre + ", correo=" + correo + ", telefono="
-                + telefono + ", Premium=" + Premium + ", Gasto=" + Gasto + ", Pagado=" + Pagado + ", Hotel=" + hotel
-                + ", Habitacion=" + habitacion + "]";
     }
 
     
