@@ -62,7 +62,7 @@ public class Habitacion {
         this.precio = precio;
     }
 
-    public void setHotelID(Hotel hotel) {
+    public void setHotel(Hotel hotel) {
         this.hotel = hotel;
     }
 
