@@ -86,7 +86,7 @@ public class HabitacionController {
         }
     }
 
-    @PutMapping("/habitaciones/{id}/hotel/{idHotel}")
+    @PutMapping("/habitaciones/{id}/hotel/{Hotel.ID}")
     ResponseEntity<Habitacion> actualizaHotel(@PathVariable Integer id, @PathVariable Integer idHotel) throws URISyntaxException{
         if (habitacionRepository.findById(id).isPresent()){
             Habitacion habitacion = habitacionRepository.findById(id).get();

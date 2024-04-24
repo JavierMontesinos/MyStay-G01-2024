@@ -89,7 +89,7 @@ public class EmpleadoController {
         }
     }
 
-    @PutMapping("/empleados/{id}/hotel")
+    @PutMapping("/empleados/{id}/hotel/{hotel.ID}")
     ResponseEntity<Empleado> updateHotel(@RequestBody Empleado newEmpleado, @PathVariable Integer id) throws URISyntaxException{
         if (empleadoRepository.findById(id).isPresent()){
             Empleado empleado = empleadoRepository.findById(id).get();

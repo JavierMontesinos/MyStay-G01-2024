@@ -96,15 +96,15 @@ public class Servicio {
         this.precio = precio;
     }
 
-    public void setHotelID(Hotel hotel) {
+    public void setHotel(Hotel hotel) {
         this.hotel = hotel;
     }
 
-    public void setEmpleadoID(Empleado empleado) {
+    public void setEmpleado(Empleado empleado) {
         this.empleado = empleado;
     }
 
-    public void setReservaID(Reserva reserva) {
+    public void setReserva(Reserva reserva) {
         this.reserva = reserva;
     }
 
