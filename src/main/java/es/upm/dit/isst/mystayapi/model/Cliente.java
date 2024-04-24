@@ -11,6 +11,7 @@ public class Cliente {
     private String DNI;
     private String nombre;
     private String correo;
+    private String password;
     private String telefono;
     private Boolean premium;
     private Double gasto;
@@ -105,6 +106,14 @@ public class Cliente {
 
     public void setHabitacion(Habitacion habitacion) {
         this.habitacion = habitacion;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     @Override

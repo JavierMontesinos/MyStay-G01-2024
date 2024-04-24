@@ -59,6 +59,7 @@ public class ClienteController {
             cliente.setPremium(newCliente.getPremium());
             cliente.setGasto(newCliente.getGasto());
             cliente.setPagado(newCliente.getPagado());
+            cliente.setPassword(newCliente.getPassword());
             cliente.setHabitacion(newCliente.getHabitacion());
             clienteRepository.save(cliente);
             return ResponseEntity.ok(cliente);
@@ -93,6 +94,9 @@ public class ClienteController {
         }
         if (newCliente.getHabitacion() != null){
             cliente.setHabitacion(newCliente.getHabitacion());
+        }
+        if (newCliente.getPassword() != null){
+            cliente.setPassword(newCliente.getPassword());
         }
         return ResponseEntity.ok(clienteRepository.save(cliente));
     }).orElseGet(() -> new ResponseEntity<Cliente>(HttpStatus.NOT_FOUND));
