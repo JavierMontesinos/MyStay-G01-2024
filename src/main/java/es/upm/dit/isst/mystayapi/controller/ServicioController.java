@@ -112,7 +112,7 @@ public class ServicioController {
         return new ResponseEntity<Servicio>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/servicios/{id}/hotel/{Hotel.id}")
+    @PutMapping("/servicios/{id}/hotel/{id}")
     ResponseEntity<Servicio> updateHotel(@RequestBody Hotel newHotel, @PathVariable Integer id) throws URISyntaxException{
         if (servicioRepository.findById(id).isPresent()){
             Servicio servicio = servicioRepository.findById(id).get();
@@ -122,7 +122,7 @@ public class ServicioController {
         return new ResponseEntity<Servicio>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/servicios/{id}/empleado/{Empleado.id}")
+    @PutMapping("/servicios/{id}/empleado/{id}")
     ResponseEntity<Servicio> updateEmpleado(@RequestBody Empleado newEmpleado, @PathVariable Integer id) throws URISyntaxException{
         if (servicioRepository.findById(id).isPresent()){
             Servicio servicio = servicioRepository.findById(id).get();
@@ -132,7 +132,7 @@ public class ServicioController {
         return new ResponseEntity<Servicio>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/servicios/{id}/reserva/{Reserva.id}")
+    @PutMapping("/servicios/{id}/reserva/{id}")
     ResponseEntity<Servicio> updateReserva(@RequestBody Reserva newReserva, @PathVariable Integer id) throws URISyntaxException{
         if (servicioRepository.findById(id).isPresent()){
             Servicio servicio = servicioRepository.findById(id).get();

@@ -101,7 +101,7 @@ public class ReservaController {
 
     }
 
-    @PutMapping("/reservas/{id}/cliente/{cliente.ID}")
+    @PutMapping("/reservas/{id}/cliente/{id}")
     ResponseEntity<Reserva> updateCliente(@PathVariable Integer id, @PathVariable Cliente cliente) throws URISyntaxException{
         if (reservaRepository.findById(id).isPresent()){
             Reserva reserva = reservaRepository.findById(id).get();
@@ -112,7 +112,7 @@ public class ReservaController {
         return new ResponseEntity<Reserva>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/reservas/{id}/habitacion/{habitacion.ID}")
+    @PutMapping("/reservas/{id}/habitacion/{id}")
     ResponseEntity<Reserva> updateHabitacion(@PathVariable Integer id, @PathVariable Habitacion habitacion) throws URISyntaxException{
         if (reservaRepository.findById(id).isPresent()){
             Reserva reserva = reservaRepository.findById(id).get();
@@ -123,7 +123,7 @@ public class ReservaController {
         return new ResponseEntity<Reserva>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/reservas/{id}/hotel/{hotel.ID}")
+    @PutMapping("/reservas/{id}/hotel/{ID}")
     ResponseEntity<Reserva> updateHotel(@PathVariable Integer ID, @PathVariable Hotel hotel) throws URISyntaxException{
         if (reservaRepository.findById(ID).isPresent()){
             Reserva reserva = reservaRepository.findById(ID).get();
