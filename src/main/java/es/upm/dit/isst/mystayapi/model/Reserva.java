@@ -81,7 +81,7 @@ public class Reserva {
         this.Llave = Llave;
     }
 
-    public void setClient(Cliente cliente) {
+    public void setCliente(Cliente cliente) {
         this.cliente = cliente;
     }
 
