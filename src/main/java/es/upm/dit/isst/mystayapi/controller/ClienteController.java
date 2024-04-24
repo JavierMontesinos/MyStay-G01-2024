@@ -104,7 +104,7 @@ public class ClienteController {
         return ResponseEntity.ok().body(null);
     }
 
-    @PutMapping("/clientes/{id}/habitacion/{id}")
+    @PutMapping("/clientes/{id}/habitacion/{habitacionid}")
     public ResponseEntity<?> actualizaHabitacion(@PathVariable Integer id, @PathVariable Habitacion habitacion){
         return clienteRepository.findByID(id).map(cliente -> {
             cliente.setHabitacion(habitacion);

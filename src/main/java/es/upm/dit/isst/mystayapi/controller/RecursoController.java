@@ -69,7 +69,7 @@ public class RecursoController {
         return new ResponseEntity<Recurso>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/recursos/{id}/hotel/{id}")
+    @PutMapping("/recursos/{id}/hotel/{hotelid}")
     ResponseEntity<Recurso> updateHotel(@PathVariable Integer id, @PathVariable Hotel hotel) throws URISyntaxException{
         if (recursoRepository.findById(id).isPresent()){
             Recurso recurso = recursoRepository.findById(id).get();
