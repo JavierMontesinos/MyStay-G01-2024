@@ -5,13 +5,10 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-import org.hibernate.mapping.Collection;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.Ordered;
-import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.auth0.jwt.exceptions.JWTVerificationException;
@@ -23,12 +20,15 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.Optional;
 
+@Component
 public class JwtAuthFilter extends OncePerRequestFilter {
 
+    private final ClienteRepository clienteRepository;
     private final UserAuthenticationProvider userAuthenticationProvider = new UserAuthenticationProvider();
 
-    @Autowired
-    private ClienteRepository clienteRepository;
+    public JwtAuthFilter(ClienteRepository clienteRepository) {
+        this.clienteRepository = clienteRepository;
+    }
 
     @Override
     protected void doFilterInternal(
