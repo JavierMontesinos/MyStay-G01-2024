@@ -20,6 +20,8 @@ public class SecurityConfig {
             .csrf(csrf -> {csrf.disable();})
             .authorizeHttpRequests(auth -> {
                 auth.requestMatchers("/login").permitAll();
+                auth.requestMatchers("/h2-console/*").permitAll();
+                auth.requestMatchers("/h2-console").permitAll();
                 auth.anyRequest().authenticated();
             })
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
