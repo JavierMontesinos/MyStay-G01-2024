@@ -14,6 +14,8 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.auth0.jwt.exceptions.JWTVerificationException;
+
 import es.upm.dit.isst.mystayapi.model.Cliente;
 import es.upm.dit.isst.mystayapi.repository.ClienteRepository;
 
@@ -46,8 +48,14 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(cliente,null, Collections.emptyList());
                     
                     SecurityContextHolder.getContext().setAuthentication(authentication);
+                } catch (JWTVerificationException e) {
+                    httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    httpServletResponse.getWriter().write("Invalid JWT Token");
+                    return;
                 } catch (RuntimeException e) {
                     SecurityContextHolder.clearContext();
+                    httpServletResponse.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+                    httpServletResponse.getWriter().write("Error ocurred");
                     throw e;
                 }
             }
