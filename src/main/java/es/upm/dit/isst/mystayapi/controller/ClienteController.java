@@ -34,7 +34,8 @@ public class ClienteController {
 
     @PostMapping("/clientes")
     ResponseEntity<Cliente> create(@RequestBody Cliente newCliente) throws URISyntaxException{
-        if (clienteRepository.findById(newCliente.getID()).isPresent()){
+        
+        if (clienteRepository.findByDNI(newCliente.getDNI()).isPresent()){
             return new ResponseEntity<Cliente>(HttpStatus.CONFLICT);
         }
         Cliente result = clienteRepository.save(newCliente);
@@ -49,28 +50,11 @@ public class ClienteController {
     }
 
     @PutMapping("/clientes/{id}")
-    ResponseEntity<Cliente> update(@RequestBody Cliente newCliente, @PathVariable Integer id) throws URISyntaxException{
-        if (clienteRepository.findById(id).isPresent()){
-            Cliente cliente = clienteRepository.findById(id).get();
-            cliente.setDNI(newCliente.getDNI());
-            cliente.setNombre(newCliente.getNombre());
-            cliente.setCorreo(newCliente.getCorreo());
-            cliente.setTelefono(newCliente.getTelefono());
-            cliente.setPremium(newCliente.getPremium());
-            cliente.setGasto(newCliente.getGasto());
-            cliente.setPagado(newCliente.getPagado());
-            cliente.setPassword(newCliente.getPassword());
-            cliente.setHabitacion(newCliente.getHabitacion());
-            clienteRepository.save(cliente);
-            return ResponseEntity.ok(cliente);
-        } else {
-            return new ResponseEntity<Cliente>(HttpStatus.NOT_FOUND);
-        }
-    }
-
-    @PatchMapping("/clientes/{id}")
     ResponseEntity<Cliente> partialUpdate(@RequestBody Cliente newCliente, @PathVariable Integer id){
+        System.out.println(newCliente.getPremium());
     return clienteRepository.findById(id).map(cliente -> {
+        System.out.println(cliente);
+
         if (newCliente.getDNI() != null){
             cliente.setDNI(newCliente.getDNI());
         }
@@ -83,13 +67,13 @@ public class ClienteController {
         if (newCliente.getTelefono() != null){
             cliente.setTelefono(newCliente.getTelefono());
         }
-        if (newCliente.getPremium() != true){
+        if (newCliente.getPremium() != null){
             cliente.setPremium(newCliente.getPremium());
         }
-        if (newCliente.getGasto() != 0.0){
+        if (newCliente.getGasto() != 0.0) {
             cliente.setGasto(newCliente.getGasto());
         }
-        if (newCliente.getPagado() != true){
+        if (newCliente.getPagado() != null){
             cliente.setPagado(newCliente.getPagado());
         }
         if (newCliente.getHabitacion() != null){
@@ -116,8 +100,4 @@ public class ClienteController {
         }).orElse(ResponseEntity.notFound().build());
             
     }
-
-    
-        
-
 }

@@ -13,6 +13,8 @@ import es.upm.dit.isst.mystayapi.model.Cliente;
 import es.upm.dit.isst.mystayapi.model.Credentials;
 import es.upm.dit.isst.mystayapi.repository.ClienteRepository;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -26,17 +28,21 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid Credentials credentials) {
-        Optional<Cliente> cliente= clienteRepository.findByDNI(credentials.getDNI());
+        Optional<Cliente> cliente = clienteRepository.findByDNI(credentials.getDNI());
         
         if (cliente.isEmpty()) {
-            return ResponseEntity.status(200).body("DNI incorrecto");
+            return ResponseEntity.status(401).body("DNI incorrecto");
         }
 
 
         if (cliente.get().getHabitacion().getNumero() != credentials.getNhab()) {
-            return ResponseEntity.status(200).body("Número de habitación incorrecto");
+            return ResponseEntity.status(401).body("Número de habitación incorrecto");
         }
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("token", userAuthenticationProvider.createToken(credentials.getDNI()));
+        response.put("id", cliente.get().getID());
         
-        return ResponseEntity.ok(userAuthenticationProvider.createToken(credentials.getDNI()));
+        return ResponseEntity.ok(response);
     }
 }
