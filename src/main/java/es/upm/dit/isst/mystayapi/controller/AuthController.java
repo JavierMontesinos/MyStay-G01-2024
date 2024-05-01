@@ -32,7 +32,6 @@ public class AuthController {
             return ResponseEntity.status(200).body("DNI incorrecto");
         }
 
-
         if (cliente.get().getHabitacion().getNumero() != credentials.getNhab()) {
             return ResponseEntity.status(200).body("Número de habitación incorrecto");
         }
