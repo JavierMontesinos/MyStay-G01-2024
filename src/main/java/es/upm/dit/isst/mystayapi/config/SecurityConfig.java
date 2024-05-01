@@ -25,8 +25,22 @@ public class SecurityConfig {
             .csrf(csrf -> {csrf.disable();})
             .authorizeHttpRequests(auth -> {
                 auth.requestMatchers("/login").permitAll();
-                auth.requestMatchers("/h2-console/*").permitAll();
+                auth.requestMatchers("/h2-console/**").permitAll();
                 auth.requestMatchers("/h2-console").permitAll();
+                auth.requestMatchers("/clientes").permitAll();
+                auth.requestMatchers("/clientes/**").permitAll();
+                auth.requestMatchers("/empleados").permitAll();
+                auth.requestMatchers("/empleados/**").permitAll();
+                auth.requestMatchers("/hoteles").permitAll();
+                auth.requestMatchers("/hoteles/**").permitAll();
+                auth.requestMatchers("/habitaciones").permitAll();
+                auth.requestMatchers("/habitaciones/**").permitAll();
+                auth.requestMatchers("/recursos").permitAll();
+                auth.requestMatchers("/recursos/**").permitAll();
+                auth.requestMatchers("/reservas").permitAll();
+                auth.requestMatchers("/reservas/**").permitAll();
+                auth.requestMatchers("/servicios").permitAll();
+                auth.requestMatchers("/servicios/**").permitAll();
                 auth.anyRequest().authenticated();
             })
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
