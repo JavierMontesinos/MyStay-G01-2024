@@ -93,8 +93,11 @@ public class Habitacion {
         Habitacion other = (Habitacion) obj;
         if (ID != other.ID)
             return false;
-        if (hotel != other.hotel)
-            return false;
+        if (hotel == null) {
+            if (other.hotel != null)
+                return false;
+        } else if (!hotel.equals(other.hotel))
+                return false;
         if (numero != other.numero)
             return false;
         if (tipo == null) {
