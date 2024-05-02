@@ -16,19 +16,20 @@ public class UserAuthenticationProvider {
 
     private String secretKey = Base64.getEncoder().encodeToString("SecretKey".getBytes());
 
-    public String createToken(String dni) {
+    public String createToken(String dni, String role) {
         Date now = new Date();
         Date validity = new Date(now.getTime() + 3600000); // 1 hour
 
         Algorithm algorithm = Algorithm.HMAC256(this.secretKey);
         return JWT.create()
+                .withClaim("role", role)
                 .withSubject(dni)
                 .withIssuedAt(now)
                 .withExpiresAt(validity)
                 .sign(algorithm);
     }
 
-    public String validateToken(String token) throws JWTVerificationException {
+    public DecodedJWT validateToken(String token) throws JWTVerificationException {
         Algorithm algorithm = Algorithm.HMAC256(this.secretKey);
 
         JWTVerifier verifier = JWT.require(algorithm)
@@ -36,8 +37,7 @@ public class UserAuthenticationProvider {
 
         DecodedJWT decoded = verifier.verify(token);
 
-        return decoded.getSubject();
-
+        return decoded;
     }
 
 }
