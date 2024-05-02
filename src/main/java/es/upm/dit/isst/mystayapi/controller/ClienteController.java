@@ -3,6 +3,7 @@ package es.upm.dit.isst.mystayapi.controller;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,8 +21,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import es.upm.dit.isst.mystayapi.model.Cliente;
 import es.upm.dit.isst.mystayapi.model.Habitacion;
+import es.upm.dit.isst.mystayapi.model.Hotel;
+import es.upm.dit.isst.mystayapi.model.Pago;
 import es.upm.dit.isst.mystayapi.model.Reserva;
 import es.upm.dit.isst.mystayapi.repository.ClienteRepository;
+import es.upm.dit.isst.mystayapi.repository.HabitacionRepository;
+import es.upm.dit.isst.mystayapi.repository.HotelRepository;
 import es.upm.dit.isst.mystayapi.repository.ReservaRepository;
 
 @RestController
@@ -32,10 +37,31 @@ public class ClienteController {
 
     @Autowired
     private ReservaRepository reservaRepository;
+    
+    @Autowired
+    private HotelRepository hotelRepository;
+    
+    @Autowired
+    private HabitacionRepository habitacionRepository;
 
     private Cliente getCliente() {
-        System.out.println(SecurityContextHolder.getContext().getAuthentication().getAuthorities());
         return (Cliente) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
+
+    private boolean pasarelaPago(Pago infoPago) {
+        // Mandar a una pasarale
+        System.out.println(infoPago);
+        if (infoPago.getBank() == null) {
+            return false;
+        }
+        if (infoPago.getCvv() == null) {
+            return false;
+        }
+        return true;
+    }
+
+    private Optional<Habitacion> reservaHabitacion(Hotel hotel) {
+        return habitacionRepository.findRandomByHotel(hotel.getID());
     }
 
     @Secured("ROLE_ADMIN")
@@ -108,7 +134,72 @@ public class ClienteController {
 
         return ResponseEntity.ok(reservaRepository.findByCliente(cliente));
     }
+
+    @PostMapping("/cliente/reservas")
+    public ResponseEntity<String> newReserva(@RequestBody Reserva reserva) {
+        Cliente cliente = getCliente();
+        
+        if (reserva.getFechaInicio() == null) {
+            return ResponseEntity.status(400).body("Escoge una fecha de entrada");
+        }
+
+        if (reserva.getFechaFinal() == null) {
+            return ResponseEntity.status(400).body("Escoge una fecha de salida");
+        }
+
+        if (reserva.getHotel() == null || reserva.getHotel().getID() == null ) {
+            return ResponseEntity.status(400).body("Necesitas escoger un hotel");
+        }
+
+        Optional<Hotel> hotel = hotelRepository.findById(reserva.getHotel().getID());
+        if (hotel.isEmpty()) {
+            return ResponseEntity.status(400).body("No existe ese hotel");
+        }
+        
+        reserva.setHotel(hotel.get());
+
+        // Hablamos con el TPM para que nos de un numero de habitación    
+        Optional<Habitacion> habitacion = reservaHabitacion(hotel.get());
+        if (habitacion.isEmpty()) {
+            return ResponseEntity.status(400).body("No hay habitaciones disponibles para ese hotel");
+        }
+        reserva.setHabitacion(habitacion.get());
+        
+        reserva.setCliente(cliente);
+        reservaRepository.save(reserva);
+
+        return ResponseEntity.ok("Se ha creado la reserva correctamente");
+    }
     
+    @PostMapping("/cliente/pagar")
+    public ResponseEntity<?> pagar(@RequestBody Pago infoPago) {
+        Cliente cliente = getCliente();
+
+        if (cliente.getPagado()) {
+            return ResponseEntity.status(400).body("No hay ningún pago a procesar");
+        }
+
+        // Pasarela de pago de pago
+        if (!pasarelaPago(infoPago)) {
+            return ResponseEntity.status(400).body("No se ha podido procesar el pago");
+        }
+
+        cliente.setPagado(true);
+        clienteRepository.save(cliente);
+
+        return ResponseEntity.ok(null);
+    }
+
+    @GetMapping("/cliente/factura")
+    public ResponseEntity<String> factura() {
+        Cliente cliente = getCliente();
+
+        if (!cliente.getPagado()) {
+            return ResponseEntity.status(400).body("No hay ninguna factura, paga primero para verla");
+        }
+
+        return ResponseEntity.ok(cliente.getGasto()+"");
+    }
 
     @PutMapping("/clientes/{id}/habitacion/{habitacionid}")
     public ResponseEntity<?> actualizaHabitacion(@PathVariable Integer id, @PathVariable Habitacion habitacion){

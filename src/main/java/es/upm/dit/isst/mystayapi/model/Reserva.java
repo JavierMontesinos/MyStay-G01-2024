@@ -4,16 +4,15 @@ import java.util.Objects;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 
-import java.sql.Time;
-
+import java.sql.Date;
 
 @Entity
 public class Reserva {
     @Id 
     @GeneratedValue( strategy=GenerationType.AUTO )
     private Integer ID;
-    @Future private Time FechaInicio;
-    @Future private Time FechaFinal;
+    @Future private Date FechaInicio;
+    @Future private Date FechaFinal;
     private String Llave;
     @ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumns({
@@ -40,11 +39,11 @@ public class Reserva {
         return ID;
     }
 
-    public Time getFechaInicio() {
+    public Date getFechaInicio() {
         return FechaInicio;
     }
 
-    public Time getFechaFinal() {
+    public Date getFechaFinal() {
         return FechaFinal;
     }
 
@@ -69,11 +68,11 @@ public class Reserva {
         this.ID = ID;
     }
 
-    public void setFechaInicio(Time FechaInicio) {
+    public void setFechaInicio(Date FechaInicio) {
         this.FechaInicio = FechaInicio;
     }
 
-    public void setFechaFinal(Time FechaFinal) {
+    public void setFechaFinal(Date FechaFinal) {
         this.FechaFinal = FechaFinal;
     }
 

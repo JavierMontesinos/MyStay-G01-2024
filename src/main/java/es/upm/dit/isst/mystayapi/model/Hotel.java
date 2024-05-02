@@ -13,6 +13,14 @@ public class Hotel {
     private String nombre;
     private String direccion;
 
+    public Hotel(Integer id){
+        this.ID = id;
+    }
+
+    public Hotel() {
+        
+    }
+
     //Getters, Setters, HashCode, Equals, ToString
     public Integer getID() {
         return ID;
