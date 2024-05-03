@@ -11,4 +11,8 @@ public class Credentials {
     public Integer getNhab() {
         return this.nhab;
     }
+
+    public boolean isAdmin() {
+        return this.dni.equals("admin") && this.nhab.equals(12345);
+    }
 }

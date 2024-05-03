@@ -26,16 +26,19 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid Credentials credentials) {
-        Optional<Cliente> cliente= clienteRepository.findByDNI(credentials.getDNI());
+        if (credentials.isAdmin()) {
+            return ResponseEntity.ok(userAuthenticationProvider.createToken(credentials.getDNI(), "ROLE_ADMIN"));
+        }
         
+        Optional<Cliente> cliente = clienteRepository.findByDNI(credentials.getDNI());
         if (cliente.isEmpty()) {
-            return ResponseEntity.status(200).body("DNI incorrecto");
+            return ResponseEntity.status(401).body("DNI incorrecto");
         }
 
         if (cliente.get().getHabitacion().getNumero() != credentials.getNhab()) {
-            return ResponseEntity.status(200).body("Número de habitación incorrecto");
+            return ResponseEntity.status(401).body("Número de habitación incorrecto");
         }
-        
-        return ResponseEntity.ok(userAuthenticationProvider.createToken(credentials.getDNI()));
+
+        return ResponseEntity.ok(userAuthenticationProvider.createToken(credentials.getDNI(), "ROLE_CLIENTE"));
     }
 }
