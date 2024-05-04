@@ -2,9 +2,9 @@ import React from 'react';
 import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 
-const CustomButton = ({ text, icon, func }) => {
+const CustomButton = ({ text, icon, testID, func }) => {
     return (
-        <TouchableOpacity style={styles.button} onPress={func} >
+        <TouchableOpacity style={styles.button} onPress={func} testID={testID} >
             <MaterialCommunityIcons name={ icon } size={20} color="white" style={styles.icon} />
             <Text style={styles.text}>{ text }</Text>
         </TouchableOpacity>
