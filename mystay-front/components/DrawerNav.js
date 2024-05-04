@@ -22,8 +22,10 @@ const DrawerNav = () => {
         drawerContent={(props) => <CustomDrawerNav {...props} />}
         screenOptions={({ route }) => ({
             headerTitle: ""
-            })}
-        >
+          }
+        )}
+        
+      >
         <Drawer.Screen name="(tabnav)" options={{ }} component={TabNavigator} />
       </Drawer.Navigator>
     );

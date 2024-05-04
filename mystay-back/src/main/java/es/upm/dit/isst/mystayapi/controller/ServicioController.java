@@ -21,6 +21,9 @@ import es.upm.dit.isst.mystayapi.model.Servicio;
 import es.upm.dit.isst.mystayapi.model.Hotel;
 import es.upm.dit.isst.mystayapi.model.Empleado;
 import es.upm.dit.isst.mystayapi.model.Reserva;
+import es.upm.dit.isst.mystayapi.repository.EmpleadoRepository;
+import es.upm.dit.isst.mystayapi.repository.HotelRepository;
+import es.upm.dit.isst.mystayapi.repository.ReservaRepository;
 import es.upm.dit.isst.mystayapi.repository.ServicioRepository;
 
 
@@ -30,6 +33,15 @@ import es.upm.dit.isst.mystayapi.repository.ServicioRepository;
 public class ServicioController {
     @Autowired
     private ServicioRepository servicioRepository;
+
+    @Autowired
+    private EmpleadoRepository empleadoRepository;
+    
+    @Autowired
+    private ReservaRepository reservaRepository;
+    
+    @Autowired
+    private HotelRepository hotelRepository;
 
     @GetMapping("/servicios")
     List<Servicio> readAll(){
@@ -112,31 +124,34 @@ public class ServicioController {
         return new ResponseEntity<Servicio>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/servicios/{id}/hotel/{Hotelid}")
-    ResponseEntity<Servicio> updateHotel(@RequestBody Hotel newHotel, @PathVariable Integer id) throws URISyntaxException{
+    @PutMapping("/servicios/{id}/hotel/{hotelid}")
+    ResponseEntity<Servicio> updateHotel(@PathVariable Integer id, @PathVariable Integer hotelid) throws URISyntaxException{
         if (servicioRepository.findById(id).isPresent()){
             Servicio servicio = servicioRepository.findById(id).get();
-            servicio.setHotel(newHotel);
+            Hotel hotel = hotelRepository.findById(hotelid).get();
+            servicio.setHotel(hotel);
             return ResponseEntity.ok(servicio);
         }
         return new ResponseEntity<Servicio>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/servicios/{id}/empleado/{Empleadoid}")
-    ResponseEntity<Servicio> updateEmpleado(@RequestBody Empleado newEmpleado, @PathVariable Integer id) throws URISyntaxException{
+    @PutMapping("/servicios/{id}/empleado/{empleadoid}")
+    ResponseEntity<Servicio> updateEmpleado(@PathVariable Integer id, @PathVariable Integer empleadoid) throws URISyntaxException{
         if (servicioRepository.findById(id).isPresent()){
             Servicio servicio = servicioRepository.findById(id).get();
-            servicio.setEmpleado(newEmpleado);
+            Empleado empleado = empleadoRepository.findById(empleadoid).get();
+            servicio.setEmpleado(empleado);
             return ResponseEntity.ok(servicio);
         }
         return new ResponseEntity<Servicio>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/servicios/{id}/reserva/{Reservaid}")
-    ResponseEntity<Servicio> updateReserva(@RequestBody Reserva newReserva, @PathVariable Integer id) throws URISyntaxException{
+    @PutMapping("/servicios/{id}/reserva/{reservaid}")
+    ResponseEntity<Servicio> updateReserva(@PathVariable Integer id, @PathVariable Integer reservaid) throws URISyntaxException{
         if (servicioRepository.findById(id).isPresent()){
             Servicio servicio = servicioRepository.findById(id).get();
-            servicio.setReserva(newReserva);
+            Reserva reserva = reservaRepository.findById(reservaid).get();
+            servicio.setReserva(reserva);
             return ResponseEntity.ok(servicio);
         }
         return new ResponseEntity<Servicio>(HttpStatus.NOT_FOUND);

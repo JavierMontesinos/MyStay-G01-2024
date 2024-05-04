@@ -102,10 +102,10 @@ public class ReservaController {
     }
 
     @PutMapping("/reservas/{id}/cliente/{clienteid}")
-    ResponseEntity<Reserva> updateCliente(@PathVariable Integer id, @PathVariable Cliente cliente) throws URISyntaxException{
+    ResponseEntity<Reserva> updateCliente(@PathVariable Integer id, @PathVariable Cliente clienteid) throws URISyntaxException{
         if (reservaRepository.findById(id).isPresent()){
             Reserva reserva = reservaRepository.findById(id).get();
-            reserva.setCliente(cliente);
+            reserva.setCliente(clienteid);
             reservaRepository.save(reserva);
             return ResponseEntity.ok(reserva);
         }
@@ -113,10 +113,10 @@ public class ReservaController {
     }
 
     @PutMapping("/reservas/{id}/habitacion/{habitacionid}")
-    ResponseEntity<Reserva> updateHabitacion(@PathVariable Integer id, @PathVariable Habitacion habitacion) throws URISyntaxException{
+    ResponseEntity<Reserva> updateHabitacion(@PathVariable Integer id, @PathVariable Habitacion habitacionid) throws URISyntaxException{
         if (reservaRepository.findById(id).isPresent()){
             Reserva reserva = reservaRepository.findById(id).get();
-            reserva.setHabitacion(habitacion);
+            reserva.setHabitacion(habitacionid);
             reservaRepository.save(reserva);
             return ResponseEntity.ok(reserva);
         }
@@ -124,10 +124,10 @@ public class ReservaController {
     }
 
     @PutMapping("/reservas/{id}/hotel/{hotelID}")
-    ResponseEntity<Reserva> updateHotel(@PathVariable Integer ID, @PathVariable Hotel hotel) throws URISyntaxException{
+    ResponseEntity<Reserva> updateHotel(@PathVariable Integer ID, @PathVariable Hotel hotelID) throws URISyntaxException{
         if (reservaRepository.findById(ID).isPresent()){
             Reserva reserva = reservaRepository.findById(ID).get();
-            reserva.setHotel(hotel);
+            reserva.setHotel(hotelID);
             reservaRepository.save(reserva);
             return ResponseEntity.ok(reserva);
         }

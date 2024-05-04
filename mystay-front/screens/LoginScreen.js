@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, TextInput, Button, StyleSheet, Image } from 'react-native';
+import { View, TextInput, StyleSheet, Image } from 'react-native';
 import { TitleText } from '../components/CustomText';
 import CustomButton from '../components/CustomButton';
 

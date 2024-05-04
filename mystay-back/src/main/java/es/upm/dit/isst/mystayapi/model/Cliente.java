@@ -96,7 +96,7 @@ public class Cliente {
         return hotel;
     }
 
-    public void setHotelID(Hotel hotel) {
+    public void setHotel(Hotel hotel) {
         this.hotel = hotel;
     }
 

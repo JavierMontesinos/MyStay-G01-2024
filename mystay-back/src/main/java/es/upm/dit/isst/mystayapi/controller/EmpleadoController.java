@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import es.upm.dit.isst.mystayapi.model.Empleado;
+import es.upm.dit.isst.mystayapi.model.Hotel;
 import es.upm.dit.isst.mystayapi.repository.EmpleadoRepository;
 
 
@@ -90,10 +91,12 @@ public class EmpleadoController {
     }
 
     @PutMapping("/empleados/{id}/hotel/{hotelid}")
-    ResponseEntity<Empleado> updateHotel(@RequestBody Empleado newEmpleado, @PathVariable Integer id) throws URISyntaxException{
+    ResponseEntity<Empleado> updateHotel(@PathVariable Integer id, @PathVariable Integer hotelid) throws URISyntaxException{
         if (empleadoRepository.findById(id).isPresent()){
             Empleado empleado = empleadoRepository.findById(id).get();
-            empleado.setHotel(newEmpleado.getHotel());
+            Hotel hotel = empleado.getHotel();
+            hotel.setID(hotelid);
+            empleado.setHotel(hotel);
             empleadoRepository.save(empleado);
             return ResponseEntity.ok(empleado);
         } else {

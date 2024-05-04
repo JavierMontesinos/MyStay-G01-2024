@@ -10,18 +10,18 @@ const ProfileScreen = ({ navigation }) => {
   
   return (
     <View style={styles.container}>
-      <TitleText text={"MI PERFIL"} />
+      <TitleText text={"MI PERFIL"} testID={"perfil-titulo"} />
       <View style={styles.buttonContainer}>
-        <CustomButton icon={"pencil"} text={"Edita tus datos personales"} func={() => navigation.navigate('(profile)')} /> 
+        <CustomButton testID={"perfil-btn"} icon={"pencil"} text={"Edita tus datos personales"} func={() => navigation.navigate('(profile)')} /> 
       </View>
       <View style={styles.buttonContainer}>
-        <CustomButton icon={"book"} text={"Consulta tus reservas"} func={() => navigation.navigate('(reserves)')} />
+        <CustomButton testID={"reservas-btn"} icon={"book"} text={"Consulta tus reservas"} func={() => navigation.navigate('(reserves)')} />
       </View>
       <View style={styles.buttonContainer}>
         <CustomButton icon={"star"} text={"Hazte premium"} />
       </View>
       <View style={styles.buttonContainer}>
-        <CustomButton icon={""} text={"Logout"} func={signOut} />
+        <CustomButton testID={"logout-btn"}  icon={""} text={"Logout"} func={signOut} />
       </View>
     </View>
   );

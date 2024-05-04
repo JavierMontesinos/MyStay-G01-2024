@@ -120,11 +120,10 @@ public class ClienteController {
         return ResponseEntity.ok(clienteRepository.save(cliente));
     }
 
-    @DeleteMapping("/cliente")
-    ResponseEntity<Cliente> delete(){
-        Cliente cliente = getCliente();
-
-        clienteRepository.delete(cliente);
+    @Secured("ROLE_ADMIN")
+    @DeleteMapping("/clientes/{id}")
+    ResponseEntity<Cliente> delete(@PathVariable Integer id){
+        clienteRepository.deleteById(id);
         return ResponseEntity.ok().body(null);
     }
 
@@ -201,12 +200,27 @@ public class ClienteController {
         return ResponseEntity.ok(cliente.getGasto()+"");
     }
 
+    @Secured("ROLE_ADMIN")
     @PutMapping("/clientes/{id}/habitacion/{habitacionid}")
-    public ResponseEntity<?> actualizaHabitacion(@PathVariable Integer id, @PathVariable Habitacion habitacion){
+    public ResponseEntity<?> actualizaHabitacion(@PathVariable Integer id, @PathVariable Integer habitacionid){
         return clienteRepository.findByID(id).map(cliente -> {
+            Habitacion habitacion = habitacionRepository.findById(habitacionid).get();
+
             cliente.setHabitacion(habitacion);
+
             return ResponseEntity.ok(clienteRepository.save(cliente));
-        }).orElse(ResponseEntity.notFound().build());
+        }).orElse(ResponseEntity.notFound().build());   
+    }
+    
+    @Secured("ROLE_ADMIN")
+    @PutMapping("/clientes/{id}/hotel/{hotelid}")
+    public ResponseEntity<?> actualizaHotel(@PathVariable Integer id, @PathVariable Integer hotelid){
+        return clienteRepository.findByID(id).map(cliente -> {
             
+            Hotel hotel = hotelRepository.findById(hotelid).get();
+            cliente.setHotel(hotel);
+
+            return ResponseEntity.ok(clienteRepository.save(cliente));
+        }).orElse(ResponseEntity.notFound().build());   
     }
 }

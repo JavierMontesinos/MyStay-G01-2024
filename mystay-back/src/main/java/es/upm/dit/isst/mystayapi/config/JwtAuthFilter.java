@@ -47,19 +47,26 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     && "Bearer".equals(authElements[0])) {
                 try {
                     DecodedJWT decodedJWT = userAuthenticationProvider.validateToken(authElements[1]);
-                    Optional<Cliente> cliente =  clienteRepository.findByDNI(decodedJWT.getSubject());
-                    
-                    if (cliente.isEmpty()){
-                        httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-                        httpServletResponse.getWriter().write("Invalid DNI");
-                        return;
-                    }
-
-                    SimpleGrantedAuthority authority = new SimpleGrantedAuthority(decodedJWT.getClaim("role").toString());
+                    SimpleGrantedAuthority authority = new SimpleGrantedAuthority(decodedJWT.getClaim("role").asString());
                     List<SimpleGrantedAuthority> authorities = Collections.singletonList(authority);
 
-                    UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(cliente.get(),"", authorities);
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                    if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(null,"", authorities);
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    } else {
+                        Optional<Cliente> cliente =  clienteRepository.findByDNI(decodedJWT.getSubject());
+                    
+                        if (cliente.isEmpty()){
+                            httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                            httpServletResponse.getWriter().write("Invalid DNI");
+                            return;
+                        }
+    
+                        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(cliente.get(),"", authorities);
+                        SecurityContextHolder.getContext().setAuthentication(authentication);
+                    }
+
+          
                     
                 } catch (JWTVerificationException e) {
                     httpServletResponse.setStatus(HttpServletResponse.SC_UNAUTHORIZED);

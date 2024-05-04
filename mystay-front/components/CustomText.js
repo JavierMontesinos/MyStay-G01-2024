@@ -2,7 +2,7 @@ import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 import { useFonts, Inter_900Black  } from '@expo-google-fonts/inter';
 
-export const TitleText = ({ text, style }) => {
+export const TitleText = ({ text, style, testID }) => {
     let [fontsLoaded] = useFonts({
         Inter_900Black,
       });
@@ -11,11 +11,11 @@ export const TitleText = ({ text, style }) => {
         return null;
       }
     return (
-      <Text style={[styles.title, style]}>{ text }</Text>
+      <Text style={[styles.title, style]} testID={testID}>{ text }</Text>
     );
 }
 
-export const SubTitleText = ({ text }) => {
+export const SubTitleText = ({ text, testID }) => {
   let [fontsLoaded] = useFonts({
     Inter_900Black,
   });
@@ -25,7 +25,7 @@ export const SubTitleText = ({ text }) => {
   }
 
   return (
-    <Text style={styles.subtitle}>{ text }</Text>
+    <Text style={styles.subtitle} testID={testID}>{ text }</Text>
   );
 }
 

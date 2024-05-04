@@ -19,7 +19,7 @@ const ComfortServiceScreen = () => {
         fecha: new Date().toISOString()
       };
   
-      const response = await axios.post('http://192.168.1.139:8443/services/1', serviceData);
+      const response = await axios.post('http://localhost:8443/services/1', serviceData);
       console.log('Service created successfully:', tipo);
       return true
     } catch (error) {

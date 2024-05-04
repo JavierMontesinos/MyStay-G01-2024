@@ -63,7 +63,7 @@ const App = () => {
     () => ({
       signIn: async (postData) => {
         try {
-          const response = await axios.post('http://192.168.1.139:8443/login', postData, {timeout: 3000});
+          const response = await axios.post('http://localhost:8443/login', postData, {timeout: 3000});
 
           await SecureStore.setItemAsync('userToken', response.data);
           dispatch({ type: 'SIGN_IN', token: response.data });

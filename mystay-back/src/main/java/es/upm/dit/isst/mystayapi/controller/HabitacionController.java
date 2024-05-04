@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import es.upm.dit.isst.mystayapi.model.Habitacion;
 import es.upm.dit.isst.mystayapi.repository.HabitacionRepository;
+import es.upm.dit.isst.mystayapi.repository.HotelRepository;
 import es.upm.dit.isst.mystayapi.model.Hotel;
 
 
@@ -27,6 +28,9 @@ import es.upm.dit.isst.mystayapi.model.Hotel;
 public class HabitacionController {
     @Autowired
     private HabitacionRepository habitacionRepository;
+    
+    @Autowired
+    private HotelRepository hotelRepository;
 
     @GetMapping("/habitaciones")
     List<Habitacion> readAll(){
@@ -87,11 +91,11 @@ public class HabitacionController {
     }
 
     @PutMapping("/habitaciones/{id}/hotel/{hotelid}")
-    ResponseEntity<Habitacion> actualizaHotel(@PathVariable Integer id, @PathVariable Integer idHotel) throws URISyntaxException{
+    ResponseEntity<Habitacion> actualizaHotel(@PathVariable Integer id, @PathVariable Integer hotelid) throws URISyntaxException{
         if (habitacionRepository.findById(id).isPresent()){
             Habitacion habitacion = habitacionRepository.findById(id).get();
-            Hotel hotel = habitacion.getHotel();
-            hotel.setID(idHotel);
+            Hotel hotel = hotelRepository.findById(hotelid).get();
+
             habitacion.setHotel(hotel);
             habitacionRepository.save(habitacion);
             return ResponseEntity.ok(habitacion);

@@ -59,7 +59,7 @@ class MystayapiApplicationTests {
 		cliente1.setPremium(false);
 		cliente1.setGasto(0.0);
 		cliente1.setPagado(false);
-		cliente1.setHotelID(hotel1);
+		cliente1.setHotel(hotel1);
 		cliente1.setHabitacion(habitacion1);
 		clienteRepository.save(cliente1);
 
@@ -104,7 +104,7 @@ class MystayapiApplicationTests {
 		cliente1.setPremium(false);
 		cliente1.setGasto(0.0);
 		cliente1.setPagado(false);
-		cliente1.setHotelID(hotel1);
+		cliente1.setHotel(hotel1);
 		cliente1.setHabitacion(habitacion1);
 		clienteRepository.save(cliente1);
 
@@ -149,7 +149,7 @@ class MystayapiApplicationTests {
 		cliente1.setPremium(false);
 		cliente1.setGasto(0.0);
 		cliente1.setPagado(true);
-		cliente1.setHotelID(hotel1);
+		cliente1.setHotel(hotel1);
 		cliente1.setHabitacion(habitacion1);
 		clienteRepository.save(cliente1);
 
@@ -189,7 +189,7 @@ class MystayapiApplicationTests {
 		cliente1.setPremium(false);
 		cliente1.setGasto(0.0);
 		cliente1.setPagado(false);
-		cliente1.setHotelID(hotel1);
+		cliente1.setHotel(hotel1);
 		cliente1.setHabitacion(habitacion1);
 		clienteRepository.save(cliente1);
 

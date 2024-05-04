@@ -16,7 +16,7 @@ const TransportScreen = () => {
       };
   
       // Send POST request to the server
-      const response = await axios.post('http://192.168.1.139:8443/services/1', serviceData);
+      const response = await axios.post('https://localhost:8443/services/1', serviceData);
       alert(`Se ha pedido correctamente el servicio de ${tipo}`)
       console.log('Service created successfully:', response.data);
     } catch (error) {
