@@ -1,0 +1,41 @@
+{
+  "expo": {
+    "name": "mystay-front",
+    "slug": "mystay-front",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.grupo1.mystay"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.grupo1.mystay"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "plugins": [
+      "expo-secure-store",
+      "@config-plugins/detox"
+    ],
+    "extra": {
+      "eas": {
+        "projectId": "0ff873af-eb16-44a5-b243-24f3bbf9813f"
+      }
+    }
+  }
+}
