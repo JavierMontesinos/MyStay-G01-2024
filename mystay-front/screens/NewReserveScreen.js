@@ -115,7 +115,6 @@ const NewReserveScreen = ({ navigation }) => {
           items={ hoteles }
           placeholder={{ label: 'Elige el hotel para hacer la reserva...', value: null }}
           value={selectedHotel}
-          touchableWrapperProps={{testID: 'picker-select'}}
         />
       </View>
 

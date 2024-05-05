@@ -50,7 +50,6 @@ public class ClienteController {
 
     private boolean pasarelaPago(Pago infoPago) {
         // Mandar a una pasarale
-        System.out.println(infoPago);
         if (infoPago.getBank() == null) {
             return false;
         }
@@ -169,6 +168,7 @@ public class ClienteController {
 
         return ResponseEntity.ok("Se ha creado la reserva correctamente");
     }
+
     
     @PostMapping("/cliente/pagar")
     public ResponseEntity<?> pagar(@RequestBody Pago infoPago) {

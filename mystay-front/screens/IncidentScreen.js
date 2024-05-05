@@ -20,6 +20,7 @@ const QuestionnaireScreen = ({ navigation }) => {
         numberOfLines={4}
         value={incidentText}
         onChangeText={(text) => setIncidentText(text)}
+        testID='incident'
       />
       <CustomButton text={"Enviar Incidencia"} func={handleSubmit} />
     </View>

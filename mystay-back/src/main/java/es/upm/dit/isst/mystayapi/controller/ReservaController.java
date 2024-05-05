@@ -4,8 +4,10 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,6 +23,7 @@ import es.upm.dit.isst.mystayapi.model.Hotel;
 import es.upm.dit.isst.mystayapi.model.Reserva;
 import es.upm.dit.isst.mystayapi.model.Habitacion;
 import es.upm.dit.isst.mystayapi.model.Cliente;
+import es.upm.dit.isst.mystayapi.repository.ClienteRepository;
 import es.upm.dit.isst.mystayapi.repository.ReservaRepository;
 
 @RestController
@@ -28,6 +31,9 @@ import es.upm.dit.isst.mystayapi.repository.ReservaRepository;
 public class ReservaController {
     @Autowired
     private ReservaRepository reservaRepository;
+    
+    @Autowired
+    private ClienteRepository clienteRepository;
 
     @GetMapping("/reservas")
     List<Reserva> readAll(){
@@ -134,5 +140,16 @@ public class ReservaController {
         return new ResponseEntity<Reserva>(HttpStatus.NOT_FOUND);
     }
 
+
+    @DeleteMapping("/reservas/cliente/{id}")
+    ResponseEntity<?> deleteAllReservas(@PathVariable Integer id) {
+        return clienteRepository.findByID(id).map(cliente -> {
+            for (Reserva reserva : reservaRepository.findByCliente(cliente)) {
+                reservaRepository.delete(reserva);
+            };
+
+            return ResponseEntity.ok().body(null);
+        }).orElse(ResponseEntity.notFound().build());
+    }
 
 }

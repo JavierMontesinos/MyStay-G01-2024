@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const hotel = {
-  "nombre": "Grand Hotel",
+  "nombre": "Dummy Grands",
   "direccion": "Main Street 123",
   "id": 2000
 }
@@ -208,10 +208,10 @@ describe('Checkout screen', () => {
 
 describe('Reservas', () => {
   afterAll(async () => {
+    await instance.delete(`/reservas/cliente/${clienteID}`);
     await instance.delete(`/clientes/${clienteID}`);
     await instance.delete(`/habitaciones/${habitacionID}`);
     await instance.delete(`/hoteles/${hotelID}`);
-  
   });
 
   beforeAll(async () => {
@@ -237,13 +237,115 @@ describe('Reservas', () => {
     
     await element(by.text('19')).swipe('up', 'fast', 1);
     
-    await element(by.id('picker-select')).tap()
+    await waitFor(element(by.id('android_picker'))).toBeVisible().withTimeout(2000);
+    await element(by.id('android_picker')).tap();
+    
     await element(by.text(hotel.nombre)).tap();
     await element(by.id('btn-reserve')).tap();
 
-    await waitFor(element(by.text('OK'))).not.toBeVisible().withTimeout(2000);
+    await waitFor(element(by.text('OK'))).toBeVisible().withTimeout(2000);
     await element(by.text('OK')).tap();
 
     await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
   });
+
+  it('Should be able to persist the created reserve', async () => {
+    await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
+    
+    await element(by.text('Consulta tus reservas')).tap();
+
+    await waitFor(element(by.text(hotel.nombre))).toBeVisible().withTimeout(2000);
+    await expect(element(by.text(/^13\/.*\/.*$/))).toBeVisible()
+    await expect(element(by.text(/^19\/.*\/.*$/))).toBeVisible()
+  });
+});
+
+describe('Servicios', () => {
+  beforeAll(async () => {
+    await device.launchApp();
+  });
+
+  beforeEach(async () => {
+    await device.reloadReactNative();
+  });
+
+  it('Should be able to request services', async () => {
+    await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
+    await element(by.text('MI PERFIL')).swipe('right', 'fast', 0.2);
+
+    await waitFor(element(by.text('Servicios confort'))).toBeVisible().withTimeout(2000);
+    await element(by.text('Servicios confort')).tap();
+
+    await waitFor(element(by.text('SERVICIOS'))).toBeVisible().withTimeout(2000);
+
+    // Ropa de cama
+    await element(by.id('checkbox')).atIndex(0).tap();
+
+    // Almohadas
+    await element(by.id('checkbox')).atIndex(2).tap();
+    
+    await element(by.text('Submit')).tap();
+
+    await waitFor(element(by.text('Servicios Seleccionados: Ropa de cama, Almohadas'))).toBeVisible().withTimeout(2000);
+    await element(by.text('OK')).tap();
+
+  });
+});
+
+describe('Incidencias', () => {
+  beforeAll(async () => {
+    await device.launchApp();
+  });
+
+  beforeEach(async () => {
+    await device.reloadReactNative();
+  });
+
+  it('Should be able to create a incidence', async () => {
+    await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
+    await element(by.text('MI PERFIL')).swipe('right', 'fast', 0.2);
+
+    await waitFor(element(by.text('Incidencias'))).toBeVisible().withTimeout(2000);
+    await element(by.text('Incidencias')).tap();
+
+    await element(by.id('incidence')).typeText('Ejemplo incidencia');
+
+    await waitFor(element(by.text('Enviar Incidencia'))).toBeVisible().withTimeout(2000);
+    await element(by.text('Enviar Incidencia')).tap()
+
+    
+    await waitFor(element(by.text('Incidencia enviada con éxito'))).toBeVisible().withTimeout(2000);
+    await element(by.text('OK')).tap();
+
+  });
+});
+
+describe('Transporte', () => {
+  beforeAll(async () => {
+    await device.launchApp();
+  });
+
+  beforeEach(async () => {
+    await device.reloadReactNative();
+  });
+
+  it('Should be able to request taxi', async () => {
+    await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
+
+    await element(by.label('Transport')).tap();
+
+    await waitFor(element(by.text('Taxi'))).toBeVisible().withTimeout(2000);
+    await element(by.text('Taxi')).tap();
+  });
+
+  it('Should be able to request airport transport', async () => {
+    await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
+
+    await element(by.label('Transport')).tap();
+
+    await waitFor(element(by.text('Transporte al aeropuerto'))).toBeVisible().withTimeout(2000);
+    await element(by.text('Transporte al aeropuerto')).tap();
+
+  });
+
 });
