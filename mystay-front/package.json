@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "adb reverse tcp:8443 tcp:8443 && expo start",
-    "android": "adb reverse tcp:8443 tcp:8443 && expo start --android",
+    "start": "expo start",
+    "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build-test": "eas build --profile test --platform android",
-    "test": "adb reverse tcp:8443 tcp:8443 && detox test --configuration android.emu.release"
+    "test": "detox test --configuration android.emu.release",
+    "reverse": "adb reverse tcp:8443 tcp:8443"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.3",
