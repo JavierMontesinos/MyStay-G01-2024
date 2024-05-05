@@ -30,16 +30,7 @@
     },
     "plugins": [
       "expo-secure-store",
-      "@config-plugins/detox",
-
-      [
-        "expo-build-properties",
-        {
-          "android": {
-            "usesCleartextTraffic": true
-          }
-        }
-      ]
+      "@config-plugins/detox"
     ],
     "extra": {
       "eas": {
