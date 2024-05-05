@@ -16,6 +16,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import IncidentScreen from '../screens/IncidentScreen';
 import OtherServicesScreen from '../screens/OtherServicesScreen';
 import ViewReservesScreen from '../screens/ViewReservesScreen';
+import CambioHabitacionScreen from '../screens/CambioHabitacionScreen';
 
 
 const Tab = createBottomTabNavigator();
@@ -85,6 +86,7 @@ const TabNavigator = () => {
         <Tab.Screen name="(pay)" options={{ tabBarButton: () => {} }} component={PayScreen} />
         <Tab.Screen name="(profile)" options={{ tabBarButton: () => {} }} component={EditProfileScreen} />
         <Tab.Screen name="(reserves)" options={{ tabBarButton: () => {} }} component={ViewReservesScreen} />
+        <Tab.Screen name="(changeroom)" options={{ tabBarButton: () => {} }} component={CambioHabitacionScreen} />
       
       </Tab.Navigator>
     );

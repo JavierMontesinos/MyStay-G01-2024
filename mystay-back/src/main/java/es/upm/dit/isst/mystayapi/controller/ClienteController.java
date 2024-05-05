@@ -133,7 +133,8 @@ public class ClienteController {
             cliente.setPagado(newCliente.getPagado());
         }
         if (newCliente.getHabitacion() != null){
-            cliente.setHabitacion(newCliente.getHabitacion());
+            Habitacion habitacion = habitacionRepository.findById(newCliente.getHabitacion().getID()).get();
+            cliente.setHabitacion(habitacion);
         }
         if (newCliente.getPassword() != null){
             cliente.setPassword(newCliente.getPassword());

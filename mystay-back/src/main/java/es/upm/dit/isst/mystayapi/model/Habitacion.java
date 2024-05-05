@@ -1,5 +1,7 @@
 package es.upm.dit.isst.mystayapi.model;
 
+import org.springframework.hateoas.mediatype.hal.HalModelBuilder;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -22,6 +24,13 @@ public class Habitacion {
 		@JoinColumn(name="HotelID",referencedColumnName="ID")		
 	})
 	private Hotel hotel;
+
+    public Habitacion(){}
+    
+    public Habitacion(Integer id){
+        this.ID = id;
+    }
+    
 
     //Getters, Setters, HashCode, Equals, ToString
     // Getters

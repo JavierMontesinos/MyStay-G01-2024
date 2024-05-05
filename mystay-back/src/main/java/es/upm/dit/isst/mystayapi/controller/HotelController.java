@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import es.upm.dit.isst.mystayapi.model.Habitacion;
 import es.upm.dit.isst.mystayapi.model.Hotel;
+import es.upm.dit.isst.mystayapi.repository.HabitacionRepository;
 import es.upm.dit.isst.mystayapi.repository.HotelRepository;
 
 @RestController
@@ -26,10 +28,19 @@ import es.upm.dit.isst.mystayapi.repository.HotelRepository;
 public class HotelController {
     @Autowired
     private HotelRepository hotelRepository;
+    
+    @Autowired
+    private HabitacionRepository habitacionRepository;
 
     @GetMapping("/hoteles")
     List<Hotel> readAll(){
         return (List<Hotel>) hotelRepository.findAll();
+    }
+
+    @GetMapping("/hotel/{id}/habitaciones")
+    List<Habitacion> readAllHabitaciones(@PathVariable Integer id){
+        Hotel hotel = hotelRepository.findById(id).get();
+        return habitacionRepository.findAllByHotel(hotel).get();
     }
 
     @Secured("ROLE_ADMIN")
