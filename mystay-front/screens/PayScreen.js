@@ -22,7 +22,7 @@ const PayScreen = ({ navigation, route }) => {
     const handlePayment = async (navigation) => {
       try {
         const response = await post(endpoint, {bank,cvv});
-        alert(response.data)
+        alert(response)
         
         navigation.navigate("Profile")
       } catch (error) {
