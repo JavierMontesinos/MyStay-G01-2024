@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -23,6 +24,7 @@ import es.upm.dit.isst.mystayapi.repository.HotelRepository;
 import es.upm.dit.isst.mystayapi.model.Hotel;
 
 
+@Secured( {"ROLE_ADMIN", "ROLE_EMPLEADO"})
 @RestController
 @RequestMapping
 public class HabitacionController {
@@ -36,7 +38,8 @@ public class HabitacionController {
     List<Habitacion> readAll(){
         return (List<Habitacion>) habitacionRepository.findAll();
     }
-
+    
+    @Secured("ROLE_ADMIN")
     @PostMapping("/habitaciones")
     ResponseEntity<Habitacion> create(@RequestBody Habitacion newHabitacion) throws URISyntaxException{
         if (habitacionRepository.findById(newHabitacion.getID()).isPresent()){
@@ -53,6 +56,7 @@ public class HabitacionController {
             .orElse(new ResponseEntity<Habitacion>(HttpStatus.NOT_FOUND));
     }
 
+    @Secured("ROLE_ADMIN")
     @PutMapping("/habitaciones/{id}")
     ResponseEntity<Habitacion> update(@RequestBody Habitacion newHabitacion, @PathVariable Integer id) throws URISyntaxException{
         if (habitacionRepository.findById(id).isPresent()){
@@ -68,6 +72,7 @@ public class HabitacionController {
         }
     }
     
+    @Secured("ROLE_ADMIN")
     @PatchMapping("/habitaciones/{id}")
     ResponseEntity<Habitacion> updatePrecio(@RequestBody Habitacion newHabitacion, @PathVariable Integer id) throws URISyntaxException{
         if (habitacionRepository.findById(id).isPresent()){
@@ -80,6 +85,7 @@ public class HabitacionController {
         }
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/habitaciones/{id}")
     ResponseEntity<?> delete(@PathVariable Integer id){
         if (habitacionRepository.findById(id).isPresent()){
@@ -90,6 +96,7 @@ public class HabitacionController {
         }
     }
 
+    @Secured("ROLE_ADMIN")
     @PutMapping("/habitaciones/{id}/hotel/{hotelid}")
     ResponseEntity<Habitacion> actualizaHotel(@PathVariable Integer id, @PathVariable Integer hotelid) throws URISyntaxException{
         if (habitacionRepository.findById(id).isPresent()){

@@ -50,7 +50,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                     SimpleGrantedAuthority authority = new SimpleGrantedAuthority(decodedJWT.getClaim("role").asString());
                     List<SimpleGrantedAuthority> authorities = Collections.singletonList(authority);
 
-                    if (authority.getAuthority().equals("ROLE_ADMIN")) {
+                    if (authority.getAuthority().equals("ROLE_ADMIN") || authority.getAuthority().equals("ROLE_EMPLEADO")) {
                         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(null,"", authorities);
                         SecurityContextHolder.getContext().setAuthentication(authentication);
                     } else {

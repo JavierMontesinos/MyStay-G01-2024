@@ -82,12 +82,13 @@ public class ClienteController {
         return habitacionRepository.findRandomByHotel(hotel.getID());
     }
 
-    @Secured("ROLE_ADMIN")
+    @Secured({ "ROLE_ADMIN", "ROLE_EMPLEADO" })
     @GetMapping("/clientes")
     List<Cliente> readAll(){
         return (List<Cliente>) clienteRepository.findAll();
     }
 
+    @Secured({ "ROLE_ADMIN", "ROLE_EMPLEADO" })
     @PostMapping("/clientes")
     ResponseEntity<Cliente> create(@RequestBody Cliente newCliente) throws URISyntaxException{
         if (clienteRepository.findByDNI(newCliente.getDNI()).isPresent()){
@@ -98,12 +99,14 @@ public class ClienteController {
         return ResponseEntity.created(new URI("/clientes" + result.getID())).body(result);
     }
 
+    @Secured({ "ROLE_CLIENTE"})
     @GetMapping("/cliente")
     ResponseEntity<Cliente> read(){
         Cliente cliente = getCliente();
         return ResponseEntity.ok(cliente);
     }
 
+    @Secured({ "ROLE_CLIENTE"})
     @PutMapping("/cliente")
     ResponseEntity<Cliente> partialUpdate(@RequestBody Cliente newCliente){
         Cliente cliente = getCliente();
@@ -145,6 +148,7 @@ public class ClienteController {
         return ResponseEntity.ok().body(null);
     }
 
+    @Secured("ROLE_CLIENTE")
     @GetMapping("/cliente/reservas")
     public ResponseEntity<List<Reserva>> reservas() {
         Cliente cliente = getCliente();
@@ -152,6 +156,7 @@ public class ClienteController {
         return ResponseEntity.ok(reservaRepository.findByCliente(cliente));
     }
 
+    @Secured("ROLE_CLIENTE")
     @PostMapping("/cliente/reservas")
     public ResponseEntity<String> newReserva(@RequestBody Reserva reserva) {
         Cliente cliente = getCliente();
@@ -188,7 +193,7 @@ public class ClienteController {
         return ResponseEntity.ok("Se ha creado la reserva correctamente");
     }
 
-    
+    @Secured("ROLE_CLIENTE")
     @PostMapping("/cliente/pagar")
     public ResponseEntity<String> pagar(@RequestBody Pago infoPago) {
         Cliente cliente = getCliente();
@@ -208,6 +213,7 @@ public class ClienteController {
         return ResponseEntity.ok("Cuenta pagada correctamente");
     }
 
+    @Secured("ROLE_CLIENTE")
     @PostMapping("/cliente/premium")
     public ResponseEntity<String> premium(@RequestBody Pago infoPago) {
         Cliente cliente = getCliente();
@@ -227,6 +233,7 @@ public class ClienteController {
         return ResponseEntity.ok("Pago tramitado, eres premium!");
     }
 
+    @Secured("ROLE_CLIENTE")
     @GetMapping("/cliente/factura")
     public ResponseEntity<String> factura() {
         Cliente cliente = getCliente();
@@ -238,6 +245,7 @@ public class ClienteController {
         return ResponseEntity.ok(cliente.getGasto()+"");
     }
 
+    @Secured("ROLE_CLIENTE")
     @PostMapping("/cliente/servicio")
     public ResponseEntity<?> newServicio(@RequestBody Servicio servicio) {
         Cliente cliente = getCliente();
@@ -250,7 +258,7 @@ public class ClienteController {
     }
     
 
-    @Secured("ROLE_ADMIN")
+    @Secured({ "ROLE_ADMIN", "ROLE_EMPLEADO" })
     @PutMapping("/clientes/{id}/habitacion/{habitacionid}")
     public ResponseEntity<?> actualizaHabitacion(@PathVariable Integer id, @PathVariable Integer habitacionid){
         return clienteRepository.findByID(id).map(cliente -> {
@@ -262,7 +270,7 @@ public class ClienteController {
         }).orElse(ResponseEntity.notFound().build());   
     }
     
-    @Secured("ROLE_ADMIN")
+    @Secured({ "ROLE_ADMIN", "ROLE_EMPLEADO" })
     @PutMapping("/clientes/{id}/hotel/{hotelid}")
     public ResponseEntity<?> actualizaHotel(@PathVariable Integer id, @PathVariable Integer hotelid){
         return clienteRepository.findByID(id).map(cliente -> {

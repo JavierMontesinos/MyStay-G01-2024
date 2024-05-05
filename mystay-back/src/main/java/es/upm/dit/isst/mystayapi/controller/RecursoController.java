@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,6 +23,7 @@ import es.upm.dit.isst.mystayapi.model.Recurso;
 import es.upm.dit.isst.mystayapi.repository.RecursoRepository;
 
 
+@Secured( {"ROLE_ADMIN", "ROLE_EMPLEADO"})
 @RestController
 @RequestMapping
 public class RecursoController {
@@ -33,6 +35,7 @@ public class RecursoController {
         return (List<Recurso>) recursoRepository.findAll();
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("/recursos")
     ResponseEntity<Recurso> create(@RequestBody Recurso newRecurso) throws URISyntaxException{
         if (recursoRepository.findById(newRecurso.getID()).isPresent()){
@@ -49,6 +52,7 @@ public class RecursoController {
             .orElse(new ResponseEntity<Recurso>(HttpStatus.NOT_FOUND));
     }
 
+    @Secured("ROLE_ADMIN")
     @PutMapping("/recursos/{id}")
     ResponseEntity<Recurso> update(@RequestBody Recurso newRecurso, @PathVariable Integer id) throws URISyntaxException{
         if (recursoRepository.findById(id).isPresent()){
@@ -60,6 +64,7 @@ public class RecursoController {
         return new ResponseEntity<Recurso>(HttpStatus.NOT_FOUND);
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/recursos/{id}")
     ResponseEntity<?> delete(@PathVariable Integer id){
         if (recursoRepository.findById(id).isPresent()){
@@ -69,6 +74,7 @@ public class RecursoController {
         return new ResponseEntity<Recurso>(HttpStatus.NOT_FOUND);
     }
 
+    @Secured("ROLE_ADMIN")
     @PutMapping("/recursos/{id}/hotel/{hotelid}")
     ResponseEntity<Recurso> updateHotel(@PathVariable Integer id, @PathVariable Hotel hotelid) throws URISyntaxException{
         if (recursoRepository.findById(id).isPresent()){
@@ -80,6 +86,7 @@ public class RecursoController {
         return new ResponseEntity<Recurso>(HttpStatus.NOT_FOUND);
     }
 
+    @Secured("ROLE_ADMIN")
     @PatchMapping("/recursos/{id}")
     ResponseEntity<Recurso> updatePartial(@RequestBody Recurso newRecurso, @PathVariable Integer id) throws URISyntaxException{
         if (recursoRepository.findById(id).isPresent()){

@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -24,6 +25,7 @@ import es.upm.dit.isst.mystayapi.model.Cliente;
 import es.upm.dit.isst.mystayapi.repository.ClienteRepository;
 import es.upm.dit.isst.mystayapi.repository.ReservaRepository;
 
+@Secured( {"ROLE_ADMIN", "ROLE_EMPLEADO"})
 @RestController
 @RequestMapping
 public class ReservaController {

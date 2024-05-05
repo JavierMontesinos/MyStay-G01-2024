@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -31,6 +32,7 @@ public class HotelController {
         return (List<Hotel>) hotelRepository.findAll();
     }
 
+    @Secured("ROLE_ADMIN")
     @PostMapping("/hoteles")
     ResponseEntity<Hotel> create(@RequestBody Hotel newHotel) throws URISyntaxException{
         if (hotelRepository.findById(newHotel.getID()).isPresent()){
@@ -47,6 +49,7 @@ public class HotelController {
             .orElse(new ResponseEntity<Hotel>(HttpStatus.NOT_FOUND));
     }
 
+    @Secured("ROLE_ADMIN")
     @PutMapping("/hoteles/{id}")
     ResponseEntity<Hotel> update(@RequestBody Hotel newHotel, @PathVariable Integer id) throws URISyntaxException{
         if (hotelRepository.findById(id).isPresent()){
@@ -58,6 +61,7 @@ public class HotelController {
         return new ResponseEntity<Hotel>(HttpStatus.NOT_FOUND);
     }
 
+    @Secured("ROLE_ADMIN")
     @DeleteMapping("/hoteles/{id}")
     ResponseEntity<?> delete(@PathVariable Integer id){
         if (hotelRepository.findById(id).isPresent()){
@@ -67,6 +71,7 @@ public class HotelController {
         return new ResponseEntity<Hotel>(HttpStatus.NOT_FOUND);
     }
 
+    @Secured("ROLE_ADMIN")
     @PatchMapping("/hoteles/{id}")
     ResponseEntity<Hotel> updatePartial(@RequestBody Hotel newHotel, @PathVariable Integer id) throws URISyntaxException{
         if (hotelRepository.findById(id).isPresent()){
