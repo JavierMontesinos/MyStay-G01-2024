@@ -4,7 +4,7 @@ import CustomButton from '../components/CustomButton';
 import { TitleText, SubTitleText } from '../components/CustomText'
 import AuthContext from '../utils/AuthProvider';
 
-import { post } from '../utils/Requests';
+import { post, validJWT } from '../utils/Requests';
 
 const PayScreen = ({ navigation }) => {
     const [bank, setBank] = React.useState('');
@@ -36,6 +36,7 @@ const PayScreen = ({ navigation }) => {
                     placeholder="Bank Account Number"
                     value={bank}
                     onChangeText={setBank}
+                    testID='bank'
                 />
             </View>
             <View style={styles.buttonContainer}>
@@ -44,10 +45,11 @@ const PayScreen = ({ navigation }) => {
                     placeholder="CVV"
                     value={cvv}
                     onChangeText={setCvv}
+                    testID='cvv'
                 />
             </View>
             <View style={styles.buttonContainer}>
-                <CustomButton icon={""} text={"Confirm"} func={() => handlePayment(navigation)} />
+                <CustomButton icon={""} text={"Confirm"} func={() => handlePayment(navigation)} testID={"btn-pay"}/>
             </View>
         </View>
   );

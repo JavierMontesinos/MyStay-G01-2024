@@ -1,10 +1,10 @@
 package es.upm.dit.isst.mystayapi.model;
 
 public class Pago {
-    private Integer bank;
+    private Long bank;
     private Integer cvv;
 
-    public Integer getBank() {
+    public Long getBank() {
         return this.bank;
     }
 

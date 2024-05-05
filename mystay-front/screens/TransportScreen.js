@@ -30,10 +30,10 @@ const TransportScreen = () => {
     <View style={styles.container}>
       <TitleText text={"TRANSPORTE"} />
       <View style={styles.buttonContainer}>
-        <CustomButton icon={""} text={"Taxi"} style={styles.text} func={() => postService("taxi", "Recogerme en taxi de inmediato en mi localización")} /> 
+        <CustomButton icon={""} text={"Taxi"} style={styles.text} testID={"taxi"} func={() => postService("taxi", "Recogerme en taxi de inmediato en mi localización")} /> 
       </View>
       <View style={styles.buttonContainer}>
-        <CustomButton icon={""} text={"Transporte al aeropuerto"}  func={() => postService("recoger en aeropuerto", "Recogerme del aeropuerto de inmediato para ir al hotel")}/>
+        <CustomButton icon={""} text={"Transporte al aeropuerto"} testID={"aeropuerto"}  func={() => postService("recoger en aeropuerto", "Recogerme del aeropuerto de inmediato para ir al hotel")}/>
       </View>
       <View style={styles.buttonContainer}>
         <CustomButton icon={""} text={"Billetes"} />

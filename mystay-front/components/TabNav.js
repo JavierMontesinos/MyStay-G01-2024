@@ -51,10 +51,31 @@ const TabNavigator = () => {
         <Tab.Screen
           name="Profile"
           component={ProfileScreen}
+          options={{
+            tabBarAccessibilityLabel: "Profile"
+          }}
         />
-        <Tab.Screen name="Transport" component={TransportScreen} />
-        <Tab.Screen name="Cafeteria" component={CafeteriaScreen} />
-        <Tab.Screen name="Premium" component={PremiumScreen} />
+        <Tab.Screen 
+          name="Transport"
+          component={TransportScreen} 
+          options={{
+            tabBarAccessibilityLabel: "Transport"
+          }}
+        />
+        <Tab.Screen
+          name="Cafeteria"
+          component={CafeteriaScreen}
+          options={{
+            tabBarAccessibilityLabel: "Cafeteria"
+          }}
+        />
+        <Tab.Screen
+          name="Premium"
+          component={PremiumScreen}
+          options={{
+            tabBarAccessibilityLabel: "Premium"
+          }}
+        />
         
         <Tab.Screen name="(checkout)" options={{ tabBarButton: () => {} }} component={CheckOutScreen} />
         <Tab.Screen name="(reserve)" options={{ tabBarButton: () => {} }} component={NewReserveScreen} />

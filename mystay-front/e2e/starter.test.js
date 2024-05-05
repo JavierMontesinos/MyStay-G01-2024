@@ -20,7 +20,7 @@ const cliente = {
   "telefono": "12345689",
   "premium": false,
   "gasto": habitacion.precio,
-  "pagado": true,
+  "pagado": false,
   "dni": "123456789",
   "id": 2000
 }
@@ -38,15 +38,7 @@ const instance = axios.create({
 
 
 describe('Login screen', () => {
-  
-  afterAll(async () => {
-    await instance.delete(`/clientes/${clienteID}`);
-    await instance.delete(`/habitaciones/${habitacionID}`);
-    await instance.delete(`/hoteles/${hotelID}`);
-
-  });
-
-  beforeAll(async () => {
+    beforeAll(async () => {
     try {
       let response = await instance.post("/login", {dni: "admin", nhab: 12345});
       admin = response.data;
@@ -86,23 +78,28 @@ describe('Login screen', () => {
     await device.reloadReactNative();
   });
 
-  it('Login form should be visible', async () => {
+  it('Should login with provided credentials', async () => {
     await expect(element(by.id('dni-login'))).toBeVisible();
     await expect(element(by.id('nhab-login'))).toBeVisible();
     await expect(element(by.id('btn-login'))).toBeVisible();
-  });
 
-  
-  it('Should login with provided credentials', async () => {
     await element(by.id('dni-login')).typeText(cliente.dni);
     await element(by.id('nhab-login')).typeText(`${habitacion.numero}\n`);
     
+    await waitFor(element(by.id('btn-login'))).toBeVisible().withTimeout(2000);
+
     await element(by.id('btn-login')).tap();
   });
 
-  
-  it('Should be logged in after restarting app', async () => {
-    await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
+});
+
+describe('Profile screen', () => {
+  beforeAll(async () => {
+    await device.launchApp();
+  });
+
+  beforeEach(async () => {
+    await device.reloadReactNative();
   });
 
   it('Should be able to edit user info', async () => {
@@ -126,5 +123,127 @@ describe('Login screen', () => {
     
     await element(by.text('Edita tus datos personales')).tap();
     await waitFor(element(by.text(nuevoNombre))).toBeVisible().withTimeout(2000);
+  });
+});
+
+
+describe('Checkout screen', () => {
+  beforeAll(async () => {
+    await device.launchApp();
+  });
+
+  beforeEach(async () => {
+    await device.reloadReactNative();
+  });
+
+
+  it('Should not be able to see factura', async () => {
+    await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
+    await element(by.text('MI PERFIL')).swipe('right', 'fast', 0.2);
+
+    await waitFor(element(by.text('Check-out'))).toBeVisible().withTimeout(2000);
+    await element(by.text('Check-out')).tap();
+
+    await waitFor(element(by.text('Ver factura'))).toBeVisible().withTimeout(2000);
+    await element(by.text('Ver factura')).tap();
+    
+    await waitFor(element(by.text(`Pagado: ${cliente.gasto}`))).not.toBeVisible().withTimeout(2000);
+    await element(by.text('OK')).tap();
+  });
+
+  it('Should be able to pay', async () => {
+    await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
+    await element(by.text('MI PERFIL')).swipe('right', 'fast', 0.2);
+
+    await waitFor(element(by.text('Check-out'))).toBeVisible().withTimeout(2000);
+    await element(by.text('Check-out')).tap();
+
+    await waitFor(element(by.text('Pagar'))).toBeVisible().withTimeout(2000);
+    await element(by.text('Pagar')).tap();
+    
+    await waitFor(element(by.id('bank'))).toBeVisible().withTimeout(2000);
+    await element(by.id('bank')).typeText('1234567899876');
+    await element(by.id('cvv')).typeText('012\n');
+    await element(by.id('btn-pay')).tap();
+
+    await waitFor(element(by.text('OK'))).toBeVisible().withTimeout(2000);
+    await element(by.text('OK')).tap();
+  });
+
+  it('Should not be able to pay', async () => {
+    await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
+    await element(by.text('MI PERFIL')).swipe('right', 'fast', 0.2);
+
+    await waitFor(element(by.text('Check-out'))).toBeVisible().withTimeout(2000);
+    await element(by.text('Check-out')).tap();
+
+    await waitFor(element(by.text('Pagar'))).toBeVisible().withTimeout(2000);
+    await element(by.text('Pagar')).tap();
+    
+    await waitFor(element(by.id('bank'))).toBeVisible().withTimeout(2000);
+    await element(by.id('bank')).typeText('1234567899876');
+    await element(by.id('cvv')).typeText('012\n');
+    await element(by.id('btn-pay')).tap();
+
+    await waitFor(element(by.text('OK'))).toBeVisible().withTimeout(2000);
+    await element(by.text('OK')).tap();
+
+   await expect(element(by.text('PAGO DE LA CUENTA'))).toBeVisible(); 
+  });
+
+  it('Should be able to see factura', async () => {
+    await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
+    await element(by.text('MI PERFIL')).swipe('right', 'fast', 0.2);
+
+    await waitFor(element(by.text('Check-out'))).toBeVisible().withTimeout(2000);
+    await element(by.text('Check-out')).tap();
+
+    await waitFor(element(by.text('Ver factura'))).toBeVisible().withTimeout(2000);
+    await element(by.text('Ver factura')).tap();
+    
+    await waitFor(element(by.text(`Pagado: ${cliente.gasto}`))).toBeVisible().withTimeout(2000);
+    await element(by.text('OK')).tap();
+  });
+});
+
+describe('Reservas', () => {
+  afterAll(async () => {
+    await instance.delete(`/clientes/${clienteID}`);
+    await instance.delete(`/habitaciones/${habitacionID}`);
+    await instance.delete(`/hoteles/${hotelID}`);
+  
+  });
+
+  beforeAll(async () => {
+    await device.launchApp();
+  });
+
+  beforeEach(async () => {
+    await device.reloadReactNative();
+  });
+
+
+  it('Should be able to create a new reserve', async () => {
+    await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
+    await element(by.text('MI PERFIL')).swipe('right', 'fast', 0.2);
+
+    await waitFor(element(by.text('Nueva reserva'))).toBeVisible().withTimeout(2000);
+    await element(by.text('Nueva reserva')).tap();
+
+    await waitFor(element(by.text('Reserva'))).toBeVisible().withTimeout(2000);
+    
+    await element(by.text('13')).tap();
+    await element(by.text('19')).tap();
+    
+    await element(by.text('19')).swipe('up', 'fast', 1);
+    
+    await element(by.id('picker-select')).tap()
+    await element(by.text(hotel.nombre)).tap();
+    await element(by.id('btn-reserve')).tap();
+
+    await waitFor(element(by.text('OK'))).not.toBeVisible().withTimeout(2000);
+    await element(by.text('OK')).tap();
+
+    await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
   });
 });

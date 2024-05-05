@@ -113,13 +113,14 @@ const NewReserveScreen = ({ navigation }) => {
         <RNPickerSelect
           onValueChange={(value) => setSelectedHotel(value)}
           items={ hoteles }
-          placeholder={{ label: 'Elige el hotel para hacer la reserva', value: null }}
+          placeholder={{ label: 'Elige el hotel para hacer la reserva...', value: null }}
           value={selectedHotel}
+          touchableWrapperProps={{testID: 'picker-select'}}
         />
       </View>
 
       <View style={{ flex: 1, alignItems: 'flex-end', marginTop: 5, marginBottom: 40}}>
-        <CustomButton icon={""} text={"Submit"} func={() => sendReservation(navigation)} />
+        <CustomButton icon={""} text={"Submit"} func={() => sendReservation(navigation)} testID={"btn-reserve"} />
       </View>
     </ScrollView>
   );

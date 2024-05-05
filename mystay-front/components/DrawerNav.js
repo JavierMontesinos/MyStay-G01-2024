@@ -21,7 +21,9 @@ const DrawerNav = () => {
       <Drawer.Navigator
         drawerContent={(props) => <CustomDrawerNav {...props} />}
         screenOptions={({ route }) => ({
-            headerTitle: ""
+            headerTitle: "",
+            swipeEdgeWidth: 300,
+            swipeMinDistance: 2
           }
         )}
         

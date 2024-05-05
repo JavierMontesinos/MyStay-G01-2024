@@ -3,7 +3,7 @@ import { View, Text, StyleSheet, ScrollView } from 'react-native';
 import { useIsFocused } from '@react-navigation/native';
 
 import { TitleText } from '../components/CustomText'
-import { get } from '../utils/Requests';
+import { get, validJWT } from '../utils/Requests';
 import AuthContext from '../utils/AuthProvider';
 
 const ViewReservesScreen = () => {
@@ -40,7 +40,7 @@ const ViewReservesScreen = () => {
     <ScrollView contentContainerStyle={styles.container}>
         <TitleText text={"LISTA DE RESERVAS"} />
       {reservations.map((reservation, index) => (
-        <View key={index} style={styles.reservationContainer}>
+        <View key={index} style={styles.reservationContainer} testID='scrollitem'>
           <Text style={styles.label}>Start Date:</Text>
           <Text style={styles.info}>{formatDate(reservation.startDate)}</Text>
           <Text style={styles.label}>End Date:</Text>

@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import { TitleText } from '../components/CustomText'
 
-import { get } from '../utils/Requests';
+import { get, validJWT } from '../utils/Requests';
 import AuthContext from '../utils/AuthProvider';
 
 
