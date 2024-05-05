@@ -336,6 +336,9 @@ describe('Transporte', () => {
 
     await waitFor(element(by.text('Taxi'))).toBeVisible().withTimeout(2000);
     await element(by.text('Taxi')).tap();
+    
+    await waitFor(element(by.text('Se ha pedido correctamente el servicio de taxi'))).toBeVisible().withTimeout(2000);
+    await element(by.text('OK')).tap();
   });
 
   it('Should be able to request airport transport', async () => {
@@ -346,6 +349,8 @@ describe('Transporte', () => {
     await waitFor(element(by.text('Transporte al aeropuerto'))).toBeVisible().withTimeout(2000);
     await element(by.text('Transporte al aeropuerto')).tap();
 
+    await waitFor(element(by.text('Se ha pedido correctamente el servicio de recoger en aeropuerto'))).toBeVisible().withTimeout(2000);
+    await element(by.text('OK')).tap();
   });
 
 });
