@@ -40,7 +40,7 @@ const instance = axios.create({
 describe('Login screen', () => {
     beforeAll(async () => {
     try {
-      let response = await instance.post("/login", {dni: "admin", nhab: 12345});
+      let response = await instance.post("/login", {dni: "admin", nhab: "admin"});
       admin = response.data;
 
       instance.defaults.headers.common['Authorization'] = `Bearer ${admin}`;
@@ -168,7 +168,7 @@ describe('Checkout screen', () => {
 
     await waitFor(element(by.text('OK'))).toBeVisible().withTimeout(2000);
     await element(by.text('OK')).tap();
-    
+
     await waitFor(element(by.text('Pagar'))).toBeVisible().withTimeout(2000);
   });
 
@@ -316,13 +316,6 @@ describe('Incidencias', () => {
 });
 
 describe('Transporte', () => {
-  afterAll(async () => {
-    await instance.delete(`/reservas/cliente/${clienteID}`);
-    await instance.delete(`/clientes/${clienteID}`);
-    await instance.delete(`/habitaciones/${habitacionID}`);
-    await instance.delete(`/hoteles/${hotelID}`);
-  });
-
   beforeAll(async () => {
     await device.launchApp();
   });
@@ -355,4 +348,98 @@ describe('Transporte', () => {
     await element(by.text('OK')).tap();
   });
 
+});
+
+describe('Premium', () => {
+  beforeAll(async () => {
+    await device.launchApp();
+  });
+
+  beforeEach(async () => {
+    await device.reloadReactNative();
+  });
+
+  it('Should not be premium', async () => {
+    await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
+    
+    await element(by.text('Edita tus datos personales')).tap();
+    
+    await waitFor(element(by.text('No premium'))).toBeVisible().withTimeout(2000);
+  });
+
+  it('Should be able to become premium', async () => {
+    await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
+    
+    await element(by.text('Hazte premium')).tap();
+    
+    await waitFor(element(by.id('bank'))).toBeVisible().withTimeout(2000);
+    await element(by.id('bank')).typeText('1234567899876');
+    await element(by.id('cvv')).typeText('012\n');
+    await element(by.id('btn-pay')).tap();
+
+    await waitFor(element(by.text('OK'))).toBeVisible().withTimeout(2000);
+    await element(by.text('OK')).tap();
+
+    await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
+  });
+
+  it('Should be premium', async () => {
+    await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
+    
+    await element(by.text('Edita tus datos personales')).tap();
+    
+    await waitFor(element(by.text('Premium'))).toBeVisible().withTimeout(2000);
+  });
+
+  it('Should not be able to become premium', async () => {
+    await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
+    
+    await element(by.text('Hazte premium')).tap();
+    
+    await waitFor(element(by.id('bank'))).toBeVisible().withTimeout(2000);
+    await element(by.id('bank')).typeText('1234567899876');
+    await element(by.id('cvv')).typeText('012\n');
+    await element(by.id('btn-pay')).tap();
+
+    await waitFor(element(by.text('OK'))).toBeVisible().withTimeout(2000);
+    await element(by.text('OK')).tap();
+
+    await waitFor(element(by.id('bank'))).toBeVisible().withTimeout(2000);
+  });
+
+});
+
+
+
+
+
+
+
+
+
+
+
+describe('Premium', () => {
+  afterAll(async () => {
+    await instance.delete(`/reservas/cliente/${clienteID}`);
+    await instance.delete(`/clientes/${clienteID}`);
+    await instance.delete(`/habitaciones/${habitacionID}`);
+    await instance.delete(`/hoteles/${hotelID}`);
+  });
+
+  beforeAll(async () => {
+    await device.launchApp();
+  });
+
+  beforeEach(async () => {
+    await device.reloadReactNative();
+  });
+
+  it('Should be able to logout', async () => {
+    await waitFor(element(by.text('MI PERFIL'))).toBeVisible().withTimeout(2000);
+    
+    await element(by.text('Logout')).tap();
+
+    await waitFor(element(by.id('btn-login'))).toBeVisible().withTimeout(2000);
+  });
 });
