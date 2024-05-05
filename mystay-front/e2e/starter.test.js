@@ -168,6 +168,8 @@ describe('Checkout screen', () => {
 
     await waitFor(element(by.text('OK'))).toBeVisible().withTimeout(2000);
     await element(by.text('OK')).tap();
+    
+    await waitFor(element(by.text('Pagar'))).toBeVisible().withTimeout(2000);
   });
 
   it('Should not be able to pay', async () => {

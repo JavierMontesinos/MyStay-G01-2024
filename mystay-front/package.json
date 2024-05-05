@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
+    "start": "adb reverse tcp:8443 tcp:8443 && expo start",
+    "android": "adb reverse tcp:8443 tcp:8443 && expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build-test": "eas build --profile test --platform android",

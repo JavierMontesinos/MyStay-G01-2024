@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import { TitleText } from '../components/CustomText'
@@ -30,7 +30,7 @@ const CheckOutScreen = ({ navigation }) => {
   <View style={styles.container}>
     <TitleText text={"CHECK-OUT"} />
     <View style={styles.buttonContainer}>
-      <CustomButton icon={""} text={"Pagar"} style={styles.text} func={() => navigation.navigate('(pay)')} /> 
+      <CustomButton icon={""} text={"Pagar"} style={styles.text} func={() => navigation.navigate('(pay)', { title: 'PAGO DE LA CUENTA', endpoint: 'cliente/pagar'})} /> 
     </View>
     <View style={styles.buttonContainer}>
       <CustomButton icon={""} text={"Ver factura"} func={handleFactura} />

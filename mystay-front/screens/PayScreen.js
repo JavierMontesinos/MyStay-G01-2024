@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, StyleSheet, TextInput } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import { TitleText, SubTitleText } from '../components/CustomText'
@@ -6,16 +6,23 @@ import AuthContext from '../utils/AuthProvider';
 
 import { post, validJWT } from '../utils/Requests';
 
-const PayScreen = ({ navigation }) => {
+import { useIsFocused } from '@react-navigation/native';
+
+
+const PayScreen = ({ navigation, route }) => {
     const [bank, setBank] = React.useState('');
     const [cvv, setCvv] = React.useState('');
 
     const { signOut } = React.useContext(AuthContext)
+
+    const { title, endpoint } = route.params;
+    const isFocused = useIsFocused();
+
     
     const handlePayment = async (navigation) => {
       try {
-        await post('cliente/pagar', {bank,cvv});
-        alert("Se ha pagado correctamente")
+        const response = await post(endpoint, {bank,cvv});
+        alert(response.data)
         
         navigation.navigate("Profile")
       } catch (error) {
@@ -30,9 +37,17 @@ const PayScreen = ({ navigation }) => {
       }
     };
 
+  useEffect(()=> {
+    if(isFocused){
+      setBank('');
+      setCvv('');
+    }
+  }, [isFocused]);
+
+
     return (
         <View style={styles.container}>
-            <TitleText text={"PAGO DE LA CUENTA"} />
+            <TitleText text={title} />
             <SubTitleText text="Introduce tus datos de pago" />
             <View style={styles.buttonContainer}>
                 <TextInput

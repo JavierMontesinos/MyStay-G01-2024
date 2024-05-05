@@ -18,7 +18,7 @@ const ProfileScreen = ({ navigation }) => {
         <CustomButton testID={"reservas-btn"} icon={"book"} text={"Consulta tus reservas"} func={() => navigation.navigate('(reserves)')} />
       </View>
       <View style={styles.buttonContainer}>
-        <CustomButton icon={"star"} text={"Hazte premium"} />
+        <CustomButton icon={"star"} text={"Hazte premium"} func={() => navigation.navigate('(pay)', { title: 'HAZTE PREMIUM!', endpoint: 'cliente/premium'})} />
       </View>
       <View style={styles.buttonContainer}>
         <CustomButton testID={"logout-btn"}  icon={""} text={"Logout"} func={signOut} />

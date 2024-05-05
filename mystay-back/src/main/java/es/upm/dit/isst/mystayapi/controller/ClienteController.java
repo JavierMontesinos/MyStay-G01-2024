@@ -190,7 +190,7 @@ public class ClienteController {
 
     
     @PostMapping("/cliente/pagar")
-    public ResponseEntity<?> pagar(@RequestBody Pago infoPago) {
+    public ResponseEntity<String> pagar(@RequestBody Pago infoPago) {
         Cliente cliente = getCliente();
 
         if (cliente.getPagado()) {
@@ -205,7 +205,26 @@ public class ClienteController {
         cliente.setPagado(true);
         clienteRepository.save(cliente);
 
-        return ResponseEntity.ok(null);
+        return ResponseEntity.ok("Cuenta pagada correctamente");
+    }
+
+    @PostMapping("/cliente/premium")
+    public ResponseEntity<String> premium(@RequestBody Pago infoPago) {
+        Cliente cliente = getCliente();
+
+        if (cliente.getPremium()) {
+            return ResponseEntity.status(400).body("Ya eres premium");
+        }
+
+        // Pasarela de pago de pago
+        if (!pasarelaPago(infoPago)) {
+            return ResponseEntity.status(400).body("No se ha podido procesar el pago");
+        }
+
+        cliente.setPremium(true);
+        clienteRepository.save(cliente);
+
+        return ResponseEntity.ok("Pago tramitado, eres premium!");
     }
 
     @GetMapping("/cliente/factura")
