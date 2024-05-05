@@ -308,7 +308,7 @@ describe('Incidencias', () => {
     await waitFor(element(by.text('Incidencias'))).toBeVisible().withTimeout(2000);
     await element(by.text('Incidencias')).tap();
 
-    await element(by.id('incidence')).typeText('Ejemplo incidencia');
+    await element(by.id('incident')).typeText('Ejemplo incidencia');
 
     await waitFor(element(by.text('Enviar Incidencia'))).toBeVisible().withTimeout(2000);
     await element(by.text('Enviar Incidencia')).tap()

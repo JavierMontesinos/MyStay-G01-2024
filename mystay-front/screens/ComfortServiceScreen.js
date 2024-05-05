@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 import { View, Text, StyleSheet, Button } from 'react-native';
 import { CheckBox } from 'react-native-elements';
 import { TitleText } from '../components/CustomText';
-import axios from 'axios';
 import CustomButton from '../components/CustomButton';
+
+import { post, validJWT } from '../utils/Requests';
+import AuthContext from '../utils/AuthProvider';
 
 const ComfortServiceScreen = () => {
   const [isChecked1, setIsChecked1] = useState(false);
@@ -11,22 +13,32 @@ const ComfortServiceScreen = () => {
   const [isChecked3, setIsChecked3] = useState(false);
   const [isChecked4, setIsChecked4] = useState(false);
 
-  const postService = async (tipo, descripcion) => {
+  const { signOut } = React.useContext(AuthContext);
+
+  const postService = async (nombre) => {
+    
+    const serviceData = {
+      nombre,
+      descripcion: "Servicio comfort",
+      fecha: new Date().toISOString()
+    };
+
     try {
-      const serviceData = {
-        tipo,
-        descripcion: "Servicio comfort",
-        fecha: new Date().toISOString()
-      };
-  
-      const response = await axios.post('http://localhost:8443/services/1', serviceData);
-      console.log('Service created successfully:', tipo);
-      return true
+      await post("cliente/servicio", serviceData);
+      return true;
     } catch (error) {
-      console.log(error.response.data)
-      console.error('Error creating service:', error);
-      return false
+      if (validJWT(error.response?.data, signOut)) {
+        console.log(error)
+        if (error.response?.data){
+          alert(error.response?.data)
+        } else {
+          alert(error)
+        }
+      }
+
+      return false;
     }
+
   };
 
   const handleSubmit = () => {

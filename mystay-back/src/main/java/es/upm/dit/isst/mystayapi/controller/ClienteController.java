@@ -24,6 +24,7 @@ import es.upm.dit.isst.mystayapi.model.Habitacion;
 import es.upm.dit.isst.mystayapi.model.Hotel;
 import es.upm.dit.isst.mystayapi.model.Pago;
 import es.upm.dit.isst.mystayapi.model.Reserva;
+import es.upm.dit.isst.mystayapi.model.Servicio;
 import es.upm.dit.isst.mystayapi.repository.ClienteRepository;
 import es.upm.dit.isst.mystayapi.repository.HabitacionRepository;
 import es.upm.dit.isst.mystayapi.repository.HotelRepository;
@@ -56,6 +57,24 @@ public class ClienteController {
         if (infoPago.getCvv() == null) {
             return false;
         }
+        return true;
+    }
+
+    private boolean mandarServicioTPM(Servicio servicio, Cliente cliente) {
+
+        // Send the service for the client cliente
+        if (servicio.getNombre() == null) {
+            return false;
+        }
+
+        if (servicio.getDescripcion() == null) {
+            return false;
+        }
+
+        if (servicio.getFecha() == null) {
+            return false;
+        }
+
         return true;
     }
 
@@ -199,6 +218,18 @@ public class ClienteController {
 
         return ResponseEntity.ok(cliente.getGasto()+"");
     }
+
+    @PostMapping("/cliente/servicio")
+    public ResponseEntity<?> newServicio(@RequestBody Servicio servicio) {
+        Cliente cliente = getCliente();
+
+        if (!mandarServicioTPM(servicio, cliente)) {
+            return ResponseEntity.status(400).body("No se ha podido pedir el servicio");
+        }
+        
+        return ResponseEntity.ok().body(servicio);
+    }
+    
 
     @Secured("ROLE_ADMIN")
     @PutMapping("/clientes/{id}/habitacion/{habitacionid}")

@@ -30,7 +30,8 @@ module.exports = {
     },
     'android.release': {
       type: 'android.apk',
-      binaryPath: 'android/app/build/outputs/apk/release/app-release.apk',
+      // binaryPath: 'android/app/build/outputs/apk/release/app-release.apk',
+      binaryPath: 'outputs/apk/release/app-release.apk',
       build: 'cd android && ./gradlew assembleRelease assembleAndroidTest -DtestBuildType=release'
     }
   },

@@ -16,8 +16,12 @@ const CheckOutScreen = ({ navigation }) => {
       alert(`Pagado: ${factura}`)
     } catch (error) {
       if (validJWT(error.response?.data, signOut)) {
-        console.log(error.response?.data)
-        alert(error.response?.data)
+        console.log(error)
+        if (error.response?.data){
+          alert(error.response?.data)
+        } else {
+          alert(error)
+        }
       }
     }
   };

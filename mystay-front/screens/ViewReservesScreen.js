@@ -24,8 +24,11 @@ const ViewReservesScreen = () => {
     } catch (error) {
       if (validJWT(error.response?.data, signOut)) {
         console.log(error)
-        console.error('Error fetching data:', error.response);
-        alert(error)
+        if (error.response?.data){
+          alert(error.response?.data)
+        } else {
+          alert(error)
+        }
       }
     }
   };

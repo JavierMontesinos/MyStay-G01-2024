@@ -3,7 +3,7 @@ package es.upm.dit.isst.mystayapi.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Future;
 
-import java.sql.Time;
+import java.sql.Date;
 
 @Entity
 public class Servicio {
@@ -12,7 +12,7 @@ public class Servicio {
     private Integer ID;
     private String nombre;
     private String descripcion;
-    @Future private Time fecha;
+    @Future private Date fecha;
     private boolean esPremium;
     private double precio;
     @ManyToOne(fetch=FetchType.EAGER)
@@ -47,7 +47,7 @@ public class Servicio {
         return descripcion;
     }
 
-    public Time getFecha() {
+    public Date getFecha() {
         return fecha;
     }
 
@@ -84,7 +84,7 @@ public class Servicio {
         this.descripcion = descripcion;
     }
 
-    public void setFecha(Time fecha) {
+    public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
 

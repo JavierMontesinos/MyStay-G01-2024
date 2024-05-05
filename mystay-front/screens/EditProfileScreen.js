@@ -27,7 +27,11 @@ const EditProfileScreen = ({ navigation }) => {
       } catch (error) {
         if (validJWT(error.response?.data, signOut)) {
           console.log(error)
-          alert(error)
+          if (error.response?.data){
+            alert(error.response?.data)
+          } else {
+            alert(error)
+          }
         }
       }
   };
@@ -43,7 +47,11 @@ const EditProfileScreen = ({ navigation }) => {
     } catch (error) {
       if (validJWT(error.response?.data, signOut)) {
         console.log(error)
-        alert(error)
+        if (error.response?.data){
+          alert(error.response?.data)
+        } else {
+          alert(error)
+        }
       }
     }
   };

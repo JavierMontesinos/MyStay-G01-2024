@@ -43,8 +43,12 @@ const NewReserveScreen = ({ navigation }) => {
         alert("Escoge una fecha de entrada y salida");
       } else {
         if (validJWT(error.response?.data, signOut)) {
-          console.log(error.response.data)
-          alert(error.response.data)
+          console.log(error)
+          if (error.response?.data){
+            alert(error.response?.data)
+          } else {
+            alert(error)
+          }
         }
       }
     }
@@ -73,8 +77,12 @@ const NewReserveScreen = ({ navigation }) => {
       setHoteles(hoteles.map(hotel => ({label: hotel.nombre, value: hotel.id })))
     } catch(error) {
       if (validJWT(error.response?.data, signOut)) {
-        console.log(error.response?.data)
-        alert(error.response?.data)
+        console.log(error)
+        if (error.response?.data){
+          alert(error.response?.data)
+        } else {
+          alert(error)
+        }
       }
     }
   }

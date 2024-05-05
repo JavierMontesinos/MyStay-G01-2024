@@ -2,30 +2,36 @@ import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import CustomButton from '../components/CustomButton';
 import { TitleText } from '../components/CustomText';
-import axios from 'axios';
 
+import { post, validJWT } from '../utils/Requests';
+import AuthContext from '../utils/AuthProvider';
 
 const TransportScreen = () => {
-  const postService = async (tipo, descripcion) => {
-    try {
-      // Create a new service object with the required data
-      const serviceData = {
-        tipo,
-        descripcion,
-        fecha: new Date().toISOString() // Get current date and time
-      };
   
-      // Send POST request to the server
-      const response = await axios.post('https://localhost:8443/services/1', serviceData);
-      alert(`Se ha pedido correctamente el servicio de ${tipo}`)
-      console.log('Service created successfully:', response.data);
+  const { signOut } = React.useContext(AuthContext);
+
+  const postService = async (nombre, descripcion) => {
+    const serviceData = {
+      nombre,
+      descripcion,
+      fecha: new Date().toISOString()
+    };
+
+    try {
+      await post("cliente/servicio", serviceData);
+      alert(`Se ha pedido correctamente el servicio de ${nombre}`)
     } catch (error) {
-      console.error('Error creating service:', error);
+      if (validJWT(error.response?.data, signOut)) {
+        console.log(error)
+        if (error.response?.data){
+          alert(error.response?.data)
+        } else {
+          alert(error)
+        }
+      }
     }
   };
   
-
-
   return (
     <View style={styles.container}>
       <TitleText text={"TRANSPORTE"} />
