@@ -207,13 +207,6 @@ describe('Checkout screen', () => {
 });
 
 describe('Reservas', () => {
-  afterAll(async () => {
-    await instance.delete(`/reservas/cliente/${clienteID}`);
-    await instance.delete(`/clientes/${clienteID}`);
-    await instance.delete(`/habitaciones/${habitacionID}`);
-    await instance.delete(`/hoteles/${hotelID}`);
-  });
-
   beforeAll(async () => {
     await device.launchApp();
   });
@@ -321,6 +314,13 @@ describe('Incidencias', () => {
 });
 
 describe('Transporte', () => {
+  afterAll(async () => {
+    await instance.delete(`/reservas/cliente/${clienteID}`);
+    await instance.delete(`/clientes/${clienteID}`);
+    await instance.delete(`/habitaciones/${habitacionID}`);
+    await instance.delete(`/hoteles/${hotelID}`);
+  });
+
   beforeAll(async () => {
     await device.launchApp();
   });
