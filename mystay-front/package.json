@@ -8,7 +8,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "build-test": "eas build --profile test --platform android",
-    "test": "detox test --configuration android.emu.release"
+    "test": "detox test --configuration android.emu.release",
+    "rev": "adb reverse tcp:8443 tcp:8443"
   },
   "dependencies": {
     "@expo-google-fonts/inter": "^0.2.3",
