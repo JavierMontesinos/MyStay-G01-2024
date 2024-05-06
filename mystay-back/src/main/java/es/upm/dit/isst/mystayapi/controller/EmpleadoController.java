@@ -3,6 +3,7 @@ package es.upm.dit.isst.mystayapi.controller;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import es.upm.dit.isst.mystayapi.model.Empleado;
 import es.upm.dit.isst.mystayapi.model.Hotel;
 import es.upm.dit.isst.mystayapi.repository.EmpleadoRepository;
+import es.upm.dit.isst.mystayapi.repository.HotelRepository;
 
 
 
@@ -30,6 +32,9 @@ import es.upm.dit.isst.mystayapi.repository.EmpleadoRepository;
 public class EmpleadoController {
     @Autowired
     private EmpleadoRepository empleadoRepository;
+    
+    @Autowired
+    private HotelRepository hotelRepository;
 
     @GetMapping("/empleados")
     List<Empleado> readAll(){
@@ -93,13 +98,13 @@ public class EmpleadoController {
 
     @PutMapping("/empleados/{id}/hotel/{hotelid}")
     ResponseEntity<Empleado> updateHotel(@PathVariable Integer id, @PathVariable Integer hotelid) throws URISyntaxException{
-        if (empleadoRepository.findById(id).isPresent()){
-            Empleado empleado = empleadoRepository.findById(id).get();
-            Hotel hotel = empleado.getHotel();
-            hotel.setID(hotelid);
-            empleado.setHotel(hotel);
-            empleadoRepository.save(empleado);
-            return ResponseEntity.ok(empleado);
+        Optional<Empleado> empleado = empleadoRepository.findById(id);
+        if (empleado.isPresent()){
+            Hotel hotel = hotelRepository.findById(hotelid).get();
+            Empleado empleadoUnwrapped = empleado.get();
+            empleadoUnwrapped.setHotel(hotel);
+            empleadoRepository.save(empleadoUnwrapped);
+            return ResponseEntity.ok(empleadoUnwrapped);
         } else {
             return new ResponseEntity<Empleado>(HttpStatus.NOT_FOUND);
         }

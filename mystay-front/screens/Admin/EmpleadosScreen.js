@@ -18,7 +18,7 @@ const EmpleadosScreen = () => {
 
   const fetchData = async () => {
     try {
-      const empleadosResponse = await get("clientes");
+      const empleadosResponse = await get("empleados");
       setEmpleados(empleadosResponse.map(empleado => ({nombre: `${empleado.nombre} - ${empleado.dni}`, telefono: empleado.telefono, hotel: empleado.hotel.nombre, correo: empleado.correo})));
     } catch (error) {
       if (validJWT(error.response?.data, signOut)) {
