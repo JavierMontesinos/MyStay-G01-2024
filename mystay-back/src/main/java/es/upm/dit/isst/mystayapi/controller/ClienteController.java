@@ -78,6 +78,10 @@ public class ClienteController {
         return true;
     }
 
+    private boolean notifyTPMCambioHabitacion(Cliente cliente) {
+        return true;
+    }
+
     private Optional<Habitacion> reservaHabitacion(Hotel hotel) {
         return habitacionRepository.findRandomByHotel(hotel.getID());
     }
@@ -133,8 +137,12 @@ public class ClienteController {
             cliente.setPagado(newCliente.getPagado());
         }
         if (newCliente.getHabitacion() != null){
+            // AVISAR TPM PARA QUE SE REVISEN POSTERIORMENTE LOS CAMBIOS
+
             Habitacion habitacion = habitacionRepository.findById(newCliente.getHabitacion().getID()).get();
-            cliente.setHabitacion(habitacion);
+            if (notifyTPMCambioHabitacion(cliente)) {
+                cliente.setHabitacion(habitacion);
+            }
         }
         if (newCliente.getPassword() != null){
             cliente.setPassword(newCliente.getPassword());

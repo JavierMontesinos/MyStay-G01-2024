@@ -15,6 +15,8 @@ import es.upm.dit.isst.mystayapi.model.Empleado;
 import es.upm.dit.isst.mystayapi.repository.ClienteRepository;
 import es.upm.dit.isst.mystayapi.repository.EmpleadoRepository;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -31,15 +33,23 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody @Valid Credentials credentials) {
+        Map<String, String> response = new HashMap<>();
+
         if (credentials.isAdmin()) {
-            return ResponseEntity.ok(userAuthenticationProvider.createToken(credentials.getDNI(), "ROLE_ADMIN"));
+            response.put("token", userAuthenticationProvider.createToken(credentials.getDNI(), "ROLE_ADMIN"));
+            response.put("role", "admin");
+
+            return ResponseEntity.ok(response);
         }
 
         Optional<Empleado> empleado = empleadoRepository.findByDNI(credentials.getDNI());
 
         if (empleado.isPresent()){
             if (empleado.get().getCorreo().equals(credentials.getNhab())) {
-                return ResponseEntity.ok(userAuthenticationProvider.createToken(credentials.getDNI(), "ROLE_EMPLEADO"));
+                response.put("token", userAuthenticationProvider.createToken(credentials.getDNI(), "ROLE_EMPLEADO"));
+                response.put("role", "empleado");
+
+                return ResponseEntity.ok(response);
             }
             return ResponseEntity.status(401).body("Credenciales incorrectas");
         }
@@ -61,6 +71,9 @@ public class AuthController {
             return ResponseEntity.status(401).body("Número de habitación incorrecto");
         }
 
-        return ResponseEntity.ok(userAuthenticationProvider.createToken(credentials.getDNI(), "ROLE_CLIENTE"));
+        response.put("token", userAuthenticationProvider.createToken(credentials.getDNI(), "ROLE_CLIENTE"));
+        response.put("role", "cliente");
+
+        return ResponseEntity.ok(response);
     }
 }
