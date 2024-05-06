@@ -30,7 +30,9 @@ const cliente = {
   "gasto": habitacion.precio,
   "pagado": false,
   "dni": "123456789",
-  "id": 2000
+  "id": 2000,
+  "hotelID": 2000,
+  "habitacionID": 2000
 }
 
 const nuevoNombre = 'Juan Jose';

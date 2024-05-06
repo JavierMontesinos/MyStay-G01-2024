@@ -10,7 +10,7 @@ const habitacion = {
     "numero": 153,
     "tipo": "Single",
     "precio": 100.0,
-    "id": 2000
+    "ID": 2000
 }
   
 const cliente = {
@@ -22,15 +22,17 @@ const cliente = {
     "gasto": habitacion.precio,
     "pagado": false,
     "dni": "123456789",
-    "id": 2000
+    "HotelID": 2000,
+    "HabitacionID": 2000,
+    "ID": 2000
 }
 
 const empleado = {
-    "nombre": "John Doe",
-    "correo": "john.doe@example.com",
+    "nombre": "Gerardo Diaz",
+    "correo": "gerardo.diaz@example.com",
     "telefono": "123-456-7890",
     "disponible": true,
-    "id": 2000,
+    "ID": 2000,
     "dni": "123456789A"
 }
 
